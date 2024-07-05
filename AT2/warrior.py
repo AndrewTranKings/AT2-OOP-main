@@ -1,14 +1,12 @@
 from character import Character
 
 class Warrior(Character):
-    def __init__(self, name, max_hp):
-        super().__init__(name, "Warrior", armor=10)
+    def __init__(self, name, max_hp, armor, window):
+        super().__init__(name, "Warrior", 3, window, max_hp) #pass in armor value as 2
         self.max_stamina = 100
         self.current_stamina = self.max_stamina
         self.stamina_regeneration = 10
         self.strength = 15
-        self.max_hp = max_hp
-        self.current_hp = max_hp
         self.attacks = {
             "Basic Attack": {"method": self.basic_attack, "stamina_cost": 10},
             "Charge": {"method": self.charge, "stamina_cost": 20},
@@ -36,9 +34,6 @@ class Warrior(Character):
 
     def regenerate_stamina(self):
         self.current_stamina = min(self.max_stamina, self.current_stamina + self.stamina_regeneration)
-
-
-
 
     def attack(self, target):
         # Calculate damage based on warrior's level, strength, and any weapon modifiers

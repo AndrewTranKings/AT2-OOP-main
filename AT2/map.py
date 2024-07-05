@@ -3,7 +3,13 @@ import random
 import pygame
 from assets import GAME_ASSETS
 from enemy import Enemy
+from healthBar import HealthBar
+from character import Character
 
+#Character Types
+from mage import Mage 
+from warrior import Warrior
+from rogue import Rogue
 
 class Map:
     def __init__(self, window):
@@ -22,7 +28,7 @@ class Map:
             'Rogue': pygame.image.load(GAME_ASSETS["rogue"]).convert_alpha()
         }
         self.player_type = None
-        self.player_position = [self.window.get_width() / 2, self.window.get_height() / 2]
+        self.player = None
         self.enemies = [
             Enemy(GAME_ASSETS["goblin"], [50, 50], self.window),
             Enemy(GAME_ASSETS["orc"], [self.window.get_width() - 120, 50], self.window),
@@ -41,6 +47,13 @@ class Map:
         Args:
             character_type (str): The type of character to load.
         """
+        if character_type == "Warrior":
+            self.player = Warrior("Player", 100, 2, self.window)
+        elif character_type == "Rouge":
+            self.player = Rogue("Player", 100, self.window)
+        elif character_type == "Mage":
+            self.player = Mage("Player", 100, self.window)
+
         self.player_type = character_type
         self.player_image = self.player_images[character_type]
         self.player_image = pygame.transform.scale(self.player_image, (int(self.player_image.get_width() * 0.15), int(self.player_image.get_height() * 0.15)))
@@ -53,7 +66,7 @@ class Map:
             bool: True if the player is in combat, False otherwise.
         """
         for enemy in self.enemies:
-            if pygame.math.Vector2(enemy.position).distance_to(self.player_position) < 50:
+            if pygame.math.Vector2(enemy.position).distance_to(self.player.player_position) < 50:
                 self.in_combat = True
                 self.current_enemy = enemy
                 return True
@@ -63,7 +76,15 @@ class Map:
         """
         Handle combat between the player and the current enemy.
         """
+        
+
         if self.in_combat and self.current_enemy:
+            #while True:
+                #print("[1] 10 Damage, ....")
+                #choice = int(input("What option would you like? "))
+                #if choice == "1":
+                    #pass #finish off combat loop
+
             player_damage = random.randint(5, 10)
             enemy_defeated = self.current_enemy.take_damage(player_damage)
             print(f"Player attacks! Deals {player_damage} damage to the enemy.")
@@ -78,7 +99,8 @@ class Map:
                 enemy_damage = random.randint(5, 10)
                 print(f"Enemy attacks back! Deals {enemy_damage} damage to the player.")
                 # Assume player has a method to take damage
-                # self.player.take_damage(enemy_damage)
+                self.player.take_damage(enemy_damage)
+
 
     def spawn_blue_orb(self):
         """
@@ -95,7 +117,7 @@ class Map:
         Returns:
             bool: True if the player has collided with the blue orb, False otherwise.
         """
-        if self.blue_orb and pygame.math.Vector2(self.orb_position).distance_to(self.player_position) < 25:
+        if self.blue_orb and pygame.math.Vector2(self.orb_position).distance_to(self.player.player_position) < 25:
             self.game_over = True
             print("YOU WIN")  # This can be modified to a more visual display if needed.
             return True
@@ -112,15 +134,7 @@ class Map:
             return 'quit'  # Stop processing events if game is over
 
         keys = pygame.key.get_pressed()
-        move_speed = 2
-        if keys[pygame.K_LEFT]:
-            self.player_position[0] -= move_speed
-        if keys[pygame.K_RIGHT]:
-            self.player_position[0] += move_speed
-        if keys[pygame.K_UP]:
-            self.player_position[1] -= move_speed
-        if keys[pygame.K_DOWN]:
-            self.player_position[1] += move_speed
+        self.player.move(keys)
 
         if not self.in_combat:
             if self.check_for_combat():
@@ -136,7 +150,9 @@ class Map:
         """
         self.window.fill((0, 0, 0))
         self.window.blit(self.map_image, (0, 0))
-        self.window.blit(self.player_image, (self.player_position[0], self.player_position[1]))
+        self.window.blit(self.player_image, (self.player.player_position[0], self.player.player_position[1]))
+        #Draw healthbar for player's character
+        HealthBar.drawRect(self.window, self.player.player_position[0], self.player.player_position[1] - 10, self.player.current_hp)
         for enemy in self.enemies:
             enemy.draw()
         if self.blue_orb:
