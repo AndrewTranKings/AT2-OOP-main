@@ -1,8 +1,8 @@
 from character import Character
 
 class Warrior(Character):
-    def __init__(self, name, max_hp, armor, window):
-        super().__init__(name, "Warrior", 3, window, max_hp) #pass in armor value as 2
+    def __init__(self, name, max_hp, armor, window,):
+        super().__init__(name, "Warrior", 2, window, max_hp) #pass in armor value as 2
         self.max_stamina = 100
         self.current_stamina = self.max_stamina
         self.stamina_regeneration = 10

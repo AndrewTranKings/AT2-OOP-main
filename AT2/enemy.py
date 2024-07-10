@@ -34,6 +34,10 @@ class Enemy:
         ]
         #Draw the healthbars for enemies
         HealthBar.drawRect(self.window, self.position[0], self.position[1] - 10, self.health)
-        
+
         # Draw the enemy image on the window at the adjusted position
         self.window.blit(self.image, adjusted_position)
+
+    def checkHealth(self):
+        return self.health
+    

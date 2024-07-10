@@ -5,6 +5,7 @@ from assets import GAME_ASSETS
 from enemy import Enemy
 from healthBar import HealthBar
 from character import Character
+from battle import Battle
 
 #Character Types
 from mage import Mage 
@@ -35,6 +36,7 @@ class Map:
             Enemy(GAME_ASSETS["skeleton"], [50, self.window.get_height() - 120], self.window),
             Enemy(GAME_ASSETS["skeleton"], [self.window.get_width() - 120, self.window.get_height() - 120], self.window)
         ]
+
         self.in_combat = False  # Ensure this attribute is defined in the constructor
         self.current_enemy = None
         self.blue_orb = None
@@ -69,37 +71,54 @@ class Map:
             if pygame.math.Vector2(enemy.position).distance_to(self.player.player_position) < 50:
                 self.in_combat = True
                 self.current_enemy = enemy
-                return True
+                return
         return False
 
     def handle_combat(self):
         """
         Handle combat between the player and the current enemy.
         """
-        
-
         if self.in_combat and self.current_enemy:
-            #while True:
-                #print("[1] 10 Damage, ....")
-                #choice = int(input("What option would you like? "))
-                #if choice == "1":
-                    #pass #finish off combat loop
-
-            player_damage = random.randint(5, 10)
-            enemy_defeated = self.current_enemy.take_damage(player_damage)
-            print(f"Player attacks! Deals {player_damage} damage to the enemy.")
-            if enemy_defeated:
-                print("Enemy defeated!")
-                self.enemies.remove(self.current_enemy)
-                self.in_combat = False
-                self.current_enemy = None
-                if not self.enemies:
-                    self.spawn_blue_orb()
-            else:
+            enemy_defeated = False
+            enemy_health = self.current_enemy.health
+            player_damage = Battle.attacks(Battle, self.window, self.player)
+            int(player_damage)
+            if int(player_damage):
+                self.current_enemy.take_damage(player_damage)
+                print(f"Player attacks! Deals {player_damage} damage to the enemy.")
                 enemy_damage = random.randint(5, 10)
                 print(f"Enemy attacks back! Deals {enemy_damage} damage to the player.")
                 # Assume player has a method to take damage
                 self.player.take_damage(enemy_damage)
+
+            if enemy_health <= 0:
+                enemy_defeated = True
+
+                
+
+ 
+
+            """choice = int(input("What option would you like? "))
+            if choice == 1:
+                player_damage = 10
+                self.current_enemy.take_damage(player_damage)
+                print(f"Player attacks! Deals {player_damage} damage to the enemy.")
+                if enemy_health <= 0:
+                    self.in_combat = False"""
+
+            """if choice == "2":
+                player_damage = 5
+                self.current_enemy.take_damage(player_damage)
+                print(f"Player attacks! Deals {player_damage} damage to the enemy.") """
+
+            if enemy_defeated == True:
+                print("Enemy defeated!")
+                self.enemies.remove(self.current_enemy)
+                self.in_combat = False
+                self.current_enemy = None
+                #self.player.gain_health(random.randint(10, 20))
+                if not self.enemies:
+                    self.spawn_blue_orb()
 
 
     def spawn_blue_orb(self):
@@ -153,6 +172,7 @@ class Map:
         self.window.blit(self.player_image, (self.player.player_position[0], self.player.player_position[1]))
         #Draw healthbar for player's character
         HealthBar.drawRect(self.window, self.player.player_position[0], self.player.player_position[1] - 10, self.player.current_hp)
+        self.handle_combat()
         for enemy in self.enemies:
             enemy.draw()
         if self.blue_orb:

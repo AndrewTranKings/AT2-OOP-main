@@ -18,6 +18,7 @@ class Character:
         self.inventory = []  # Example empty list for character's inventory
         self.gold = 0  # Example starting value for character's gold
         self.attribute_points = 0  # Attribute points available to allocate
+        self.attacks = {"Attack 1", "Attack 2"}
 
         self.player_position = [window.get_width() / 2, window.get_height() / 2] #set player postion in middle
         self.speed = 0.2 
@@ -71,4 +72,10 @@ class Character:
             print(f"{self.name} takes {actual_damage} damage and has been defeated!") #if health goes below or equal to zero
         else:
             print(f"{self.name} takes {actual_damage} damage. Remaining hit points: {self.current_hp}")
+
+    def gain_health(self, amount):
+        self.current_hp += amount
+        print(f"{self.name} heals {amount} health. Remaining hit points: {self.current_hp}")
+        if self.current_hp > 100:
+            self.current_hp = 100
 

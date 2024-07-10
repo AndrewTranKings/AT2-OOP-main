@@ -30,6 +30,7 @@ class Game:
                     return  # Exit the run method
 
             elif self.state == 'character_select':  # If the state is 'character_select'
+   
                 selected_character = self.character_select.run()  # Run the character select screen and get the selected character
                 if selected_character == 'back':  # If the selected character is 'back'
                     self.state = 'menu'  # Change the state to 'menu'
