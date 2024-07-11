@@ -49,12 +49,12 @@ class Map:
         Args:
             character_type (str): The type of character to load.
         """
-        if character_type == "Warrior":
-            self.player = Warrior("Player", 100, 2, self.window)
-        elif character_type == "Rouge":
-            self.player = Rogue("Player", 100, self.window)
+        if character_type == "Warrior":                             #Key: 3 = Good, 2 = Mid, 1 = Bad
+            self.player = Warrior("Player", 120, 4, self.window) #Warrior has defense: 3, offense: 1, stamina: 2
+        elif character_type == "Rogue":
+            self.player = Rogue("Player", 100, 3, self.window) #Rogue has defense: 2, offense: 2, stamina: 3
         elif character_type == "Mage":
-            self.player = Mage("Player", 100, self.window)
+            self.player = Mage("Player", 80, 2, self.window) #Mage has defense: 1, offense, 3, stamina: 2
 
         self.player_type = character_type
         self.player_image = self.player_images[character_type]
@@ -81,42 +81,29 @@ class Map:
         if self.in_combat and self.current_enemy:
             enemy_defeated = False
             enemy_health = self.current_enemy.health
-            player_damage = Battle.attacks(Battle, self.window, self.player)
+            player_damage = Battle.attacks(Battle, self.window, self.player, self.player.current_stamina)
+            Battle.draw_text(self.window, self.player)
             int(player_damage)
             if int(player_damage):
                 self.current_enemy.take_damage(player_damage)
-                print(f"Player attacks! Deals {player_damage} damage to the enemy.")
                 enemy_damage = random.randint(5, 10)
                 print(f"Enemy attacks back! Deals {enemy_damage} damage to the player.")
                 # Assume player has a method to take damage
                 self.player.take_damage(enemy_damage)
+                self.current_enemy.health_cap()
 
             if enemy_health <= 0:
                 enemy_defeated = True
-
-                
-
- 
-
-            """choice = int(input("What option would you like? "))
-            if choice == 1:
-                player_damage = 10
-                self.current_enemy.take_damage(player_damage)
-                print(f"Player attacks! Deals {player_damage} damage to the enemy.")
-                if enemy_health <= 0:
-                    self.in_combat = False"""
-
-            """if choice == "2":
-                player_damage = 5
-                self.current_enemy.take_damage(player_damage)
-                print(f"Player attacks! Deals {player_damage} damage to the enemy.") """
 
             if enemy_defeated == True:
                 print("Enemy defeated!")
                 self.enemies.remove(self.current_enemy)
                 self.in_combat = False
                 self.current_enemy = None
-                #self.player.gain_health(random.randint(10, 20))
+                self.player.regenerate_stamina()
+                self.player.gain_health(random.randint(5, 15))
+                self.player.armor = self.player.base_armor
+                self.player.strength = self.player.base_strength
                 if not self.enemies:
                     self.spawn_blue_orb()
 
@@ -171,7 +158,7 @@ class Map:
         self.window.blit(self.map_image, (0, 0))
         self.window.blit(self.player_image, (self.player.player_position[0], self.player.player_position[1]))
         #Draw healthbar for player's character
-        HealthBar.drawRect(self.window, self.player.player_position[0], self.player.player_position[1] - 10, self.player.current_hp)
+        HealthBar.drawRect(self.window, self.player.player_position[0], self.player.player_position[1] - 10, self.player.current_hp, self.player.max_hp)
         self.handle_combat()
         for enemy in self.enemies:
             enemy.draw()

@@ -9,8 +9,8 @@ class HealthBar():
         self.max_hp = max_hp
         
 
-    def drawRect(window, x, y, w):
-        rect = pygame.rect.Rect(x, y, 100, 10)
+    def drawRect(window, x, y, w, max):
+        rect = pygame.rect.Rect(x, y, max, 10)
         pygame.draw.rect(window, (255, 0, 0), rect)
         rect2 = pygame.rect.Rect(x, y, w, 10)
         pygame.draw.rect(window, (0, 255, 0), rect2)

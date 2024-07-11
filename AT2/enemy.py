@@ -15,9 +15,12 @@ class Enemy:
         
         # Set the window where the enemy will be drawn
         self.window = window
+
+        #Set the max health of the enemy to 100
+        self.max_health = 100
         
-        # Set the initial health of the enemy to 100
-        self.health = 100
+        # Set the initial health of the enemy to the max health
+        self.health = self.max_health
 
     def take_damage(self, damage):
         # Reduce the enemy's health by the specified damage amount
@@ -33,11 +36,13 @@ class Enemy:
             max(0, min(self.window.get_height() - self.image.get_height(), self.position[1]))
         ]
         #Draw the healthbars for enemies
-        HealthBar.drawRect(self.window, self.position[0], self.position[1] - 10, self.health)
+        HealthBar.drawRect(self.window, self.position[0], self.position[1] - 10, self.health, self.max_health)
 
         # Draw the enemy image on the window at the adjusted position
         self.window.blit(self.image, adjusted_position)
 
-    def checkHealth(self):
-        return self.health
+    def health_cap(self):
+        if self.health > 100:
+            self.health = 100
+        
     
