@@ -10,14 +10,14 @@ class Rogue(Character):
         self.stamina_regeneration = 65
         self.base_armor = 2
         self.armor = self.base_armor
-        self.base_strength = 18
+        self.base_strength = 100 #Strength is 17
         self.strength = self.base_strength
         self.attacks = {
             "Quick Jab": {"method": self.attack_1, "stamina_cost": 10},
-            "Shadow Blade": {"method": self.attack_2, "stamina_cost": 60},
+            "Shadow Blade": {"method": self.attack_2, "stamina_cost": 50},
             "Garrote": {"method": self.attack_3, "stamina_cost": 30},
             "Phantom Strike": {"method": self.attack_4, "stamina_cost": 25},
-            "Blade Flurry": {"method": self.attack_5, "stamina_cost": 50}
+            "Blade Flurry": {"method": self.attack_5, "stamina_cost": 60}
         }
 
     def regenerate_stamina(self):
@@ -47,12 +47,12 @@ class Rogue(Character):
         return(damage)
     
     def attack_4(self): #Phantom Strike
-        damage = self.strength + random.randint(5, 35)
+        damage = self.strength + random.randint(5, 25)
         print(f"{self.name} unleashes their phantom for {damage} damage")
         return(damage)
     
     def attack_5(self): #Blade Flurry
-        damage = self.strength * 5
+        damage = self.strength * 4
         print(f"{self.name} empties their cloak into the enemy for {damage} damage")
         return(damage)
 

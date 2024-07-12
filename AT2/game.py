@@ -15,7 +15,6 @@ class Game:
         self.game_map = Map(self.window)  # Create an instance of the Map class
         self.state = 'menu'  # Set the initial state to 'menu'
         self.current_character = None  # To store the chosen character
-        #self.battle = Battle(self.window) #Create an instance of the battle class
 
     def run(self):
         while True:
@@ -48,9 +47,6 @@ class Game:
                     return  # Exit the run method
                 else:
                     self.game_map.draw()  # Draw the game map
-
-            elif self.state == 'battle': #If the state is 'battle'
-                self.battle.run()
 
             for event in pygame.event.get():  # Iterate over the events in the event queue
                 if event.type == pygame.QUIT:  # If the event type is QUIT

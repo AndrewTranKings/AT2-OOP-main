@@ -9,7 +9,7 @@ class Mage(Character):
         self.stamina_regeneration = 50
         self.base_armor = 1
         self.armor = self.base_armor
-        self.base_strength = 30
+        self.base_strength = 19
         self.strength = self.base_strength
         self.attacks = {
             "Basic Spark": {"method": self.attack_1, "stamina_cost": 10},

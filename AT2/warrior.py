@@ -15,7 +15,7 @@ class Warrior(Character):
             "Charge": {"method": self.attack_2, "stamina_cost": 20},
             "Cleave Attack": {"method": self.attack_3, "stamina_cost": 30},
             "Shield Bash": {"method": self.attack_4, "stamina_cost": 15},
-            "Defensive Stance": {"method": self.attack_5, "stamina_cost": 60}
+            "Defensive Stance": {"method": self.attack_5, "stamina_cost": 50}
         }
 
     def choose_attack(self, target):

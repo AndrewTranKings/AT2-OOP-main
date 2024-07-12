@@ -101,12 +101,20 @@ class Map:
                 self.in_combat = False
                 self.current_enemy = None
                 self.player.regenerate_stamina()
-                self.player.gain_health(random.randint(5, 15))
+                self.player.gain_health(random.randint(5, 10))
                 self.player.armor = self.player.base_armor
                 self.player.strength = self.player.base_strength
                 if not self.enemies:
-                    self.spawn_blue_orb()
+                    self.start_new_wave()
 
+    def start_new_wave(self):
+
+        """self.enemies = [
+            Enemy(GAME_ASSETS["goblin"], [50, 50], self.window),
+            Enemy(GAME_ASSETS["orc"], [self.window.get_width() - 120, 50], self.window),
+            Enemy(GAME_ASSETS["skeleton"], [50, self.window.get_height() - 120], self.window),
+            Enemy(GAME_ASSETS["skeleton"], [self.window.get_width() - 120, self.window.get_height() - 120], self.window)
+        ]"""""
 
     def spawn_blue_orb(self):
         """
@@ -124,9 +132,15 @@ class Map:
             bool: True if the player has collided with the blue orb, False otherwise.
         """
         if self.blue_orb and pygame.math.Vector2(self.orb_position).distance_to(self.player.player_position) < 25:
-            self.game_over = True
-            print("YOU WIN")  # This can be modified to a more visual display if needed.
-            return True
+            #self.game_over = True
+            #print("YOU WIN")  # This can be modified to a more visual display if needed.
+            self.enemies = [
+                Enemy(GAME_ASSETS["goblin"], [50, 50], self.window),
+                Enemy(GAME_ASSETS["orc"], [self.window.get_width() - 120, 50], self.window),
+                Enemy(GAME_ASSETS["skeleton"], [50, self.window.get_height() - 120], self.window),
+                Enemy(GAME_ASSETS["skeleton"], [self.window.get_width() - 120, self.window.get_height() - 120], self.window)
+            ]
+            #return True
         return False
 
     def handle_events(self):
