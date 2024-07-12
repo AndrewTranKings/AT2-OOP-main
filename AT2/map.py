@@ -41,6 +41,7 @@ class Map:
         self.current_enemy = None
         self.blue_orb = None
         self.game_over = False
+        self.wave_counter = 1
 
     def load_player(self, character_type):
         """
@@ -71,7 +72,7 @@ class Map:
             if pygame.math.Vector2(enemy.position).distance_to(self.player.player_position) < 50:
                 self.in_combat = True
                 self.current_enemy = enemy
-                return
+                return True
         return False
 
     def handle_combat(self):
@@ -105,16 +106,7 @@ class Map:
                 self.player.armor = self.player.base_armor
                 self.player.strength = self.player.base_strength
                 if not self.enemies:
-                    self.start_new_wave()
-
-    def start_new_wave(self):
-
-        """self.enemies = [
-            Enemy(GAME_ASSETS["goblin"], [50, 50], self.window),
-            Enemy(GAME_ASSETS["orc"], [self.window.get_width() - 120, 50], self.window),
-            Enemy(GAME_ASSETS["skeleton"], [50, self.window.get_height() - 120], self.window),
-            Enemy(GAME_ASSETS["skeleton"], [self.window.get_width() - 120, self.window.get_height() - 120], self.window)
-        ]"""""
+                    self.spawn_blue_orb()
 
     def spawn_blue_orb(self):
         """
@@ -132,16 +124,14 @@ class Map:
             bool: True if the player has collided with the blue orb, False otherwise.
         """
         if self.blue_orb and pygame.math.Vector2(self.orb_position).distance_to(self.player.player_position) < 25:
-            #self.game_over = True
-            #print("YOU WIN")  # This can be modified to a more visual display if needed.
+            self.blue_orb = None
+            self.wave_counter += 1
             self.enemies = [
                 Enemy(GAME_ASSETS["goblin"], [50, 50], self.window),
                 Enemy(GAME_ASSETS["orc"], [self.window.get_width() - 120, 50], self.window),
                 Enemy(GAME_ASSETS["skeleton"], [50, self.window.get_height() - 120], self.window),
                 Enemy(GAME_ASSETS["skeleton"], [self.window.get_width() - 120, self.window.get_height() - 120], self.window)
             ]
-            #return True
-        return False
 
     def handle_events(self):
         """
@@ -162,7 +152,14 @@ class Map:
         self.handle_combat()
 
         if self.blue_orb and self.check_orb_collision():
-            return 'quit'
+            #return 'quit'
+            pass
+
+    def track_wave_count(self):
+        TEXTCOLOUR = (255, 255, 255)
+        fontObj0 = pygame.font.SysFont("microsoftphagspa", 20)
+        textSufaceObj0 = fontObj0.render(f"Wave: {self.wave_counter}", True, TEXTCOLOUR, None)
+        self.window.blit(textSufaceObj0, (5, 5))
 
     def draw(self):
         """
@@ -173,6 +170,7 @@ class Map:
         self.window.blit(self.player_image, (self.player.player_position[0], self.player.player_position[1]))
         #Draw healthbar for player's character
         HealthBar.drawRect(self.window, self.player.player_position[0], self.player.player_position[1] - 10, self.player.current_hp, self.player.max_hp)
+        self.track_wave_count()
         self.handle_combat()
         for enemy in self.enemies:
             enemy.draw()

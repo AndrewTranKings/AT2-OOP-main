@@ -21,7 +21,7 @@ class Character:
         self.attacks = {"Attack 1", "Attack 2"}
 
         self.player_position = [window.get_width() / 2, window.get_height() / 2] #set player postion in middle
-        self.speed = 0.2 
+        self.speed = 0.3 
         
 
     def move(self, keys):
@@ -34,6 +34,16 @@ class Character:
         if keys[pygame.K_s]:
             self.player_position[1] += self.speed
 
+        #Define boundaries for the player's movement
+        if self.player_position[0] <= 0:
+            self.player_position[0] = 0
+        if self.player_position[1] <= 10:
+            self.player_position[1] = 10
+        if self.player_position[0] >= 790:
+            self.player_position[0] = 790
+        if self.player_position[1] >= 590:
+            self.player_position[1] = 590
+    #This ensures the player can't exit the dimensions of the screen
 
     def assign_attribute_points(self, attribute, points):
         # Ensure the attribute exists before assigning points
