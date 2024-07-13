@@ -31,7 +31,7 @@ class CharacterSelect:
         self.background_image = pygame.image.load(GAME_ASSETS['main_menu_background']).convert()
         self.background_image = pygame.transform.scale(self.background_image, (self.window.get_width(), self.window.get_height()))
         self.characters = {
-            "Warrior": pygame.image.load(GAME_ASSETS['warrior_button']).convert_alpha(),
+            "Warrior": pygame.image.load(GAME_ASSETS['warrior_button_2']).convert_alpha(),
             "Mage": pygame.image.load(GAME_ASSETS['mage_button']).convert_alpha(),
             "Rogue": pygame.image.load(GAME_ASSETS['rogue_button']).convert_alpha()
         }
