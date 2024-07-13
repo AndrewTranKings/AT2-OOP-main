@@ -1,8 +1,8 @@
 import pygame
 import random
+from enemy import Enemy
 
-class Goblin:
-    __name = None
+class Goblin(Enemy):
 
     def __init__(self, position, window):
         # Load the goblin image from the specified path

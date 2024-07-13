@@ -19,6 +19,11 @@ class Mage(Character):
             "Empowerment Chant": {"method": self.attack_5, "stamina_cost": 60}
         }
 
+    def update_stats(self):
+        self.base_armor += int(self.level * 0.5)
+        self.base_strength += int(self.level * 0.5)
+        self.stamina_regeneration += int(self.level * 0.5)
+
     def regenerate_stamina(self):
         self.current_stamina = min(self.max_stamina, self.current_stamina + self.stamina_regeneration)
         print(f"{self.name} currently on {self.current_stamina} stamina")

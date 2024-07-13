@@ -3,7 +3,7 @@ import random
 from healthBar import HealthBar
 
 class Enemy:
-    def __init__(self, image_path, position, window):
+    def __init__(self, image_path, position, window, level):
         # Load the enemy image from the specified image path
         self.image = pygame.image.load(image_path).convert_alpha()
         
@@ -21,6 +21,13 @@ class Enemy:
         
         # Set the initial health of the enemy to the max health
         self.health = self.max_health
+
+        #Set the inital level of the enemy
+        self.level = level
+
+    def deal_damage(self):
+        damage = random.randint(5, 10) + self.level
+        return damage
 
     def take_damage(self, damage):
         # Reduce the enemy's health by the specified damage amount

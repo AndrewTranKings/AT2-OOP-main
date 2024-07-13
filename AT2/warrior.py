@@ -5,10 +5,10 @@ class Warrior(Character):
         super().__init__(name, "Warrior", armor, window, max_hp) #pass in armor value as 2
         self.max_stamina = 100
         self.current_stamina = self.max_stamina
-        self.stamina_regeneration = 50
+        self.stamina_regeneration = 25
         self.base_armor = 3
         self.armor = self.base_armor
-        self.base_strength = 15
+        self.base_strength = 5
         self.strength = self.base_strength
         self.attacks = {
             "Basic Attack": {"method": self.attack_1, "stamina_cost": 10},
@@ -34,6 +34,11 @@ class Warrior(Character):
                 print("Not enough stamina for this attack.")
         else:
             print("Invalid attack.")
+
+    def update_stats(self):
+        self.base_armor += int(self.level * 0.5)
+        self.base_strength += int(self.level * 0.5)
+        self.stamina_regeneration += int(self.level * 0.5)
 
     def regenerate_stamina(self):
         self.current_stamina = min(self.max_stamina, self.current_stamina + self.stamina_regeneration)

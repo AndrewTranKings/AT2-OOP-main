@@ -10,7 +10,7 @@ class Rogue(Character):
         self.stamina_regeneration = 65
         self.base_armor = 2
         self.armor = self.base_armor
-        self.base_strength = 100 #Strength is 17
+        self.base_strength = 17 #Strength is 17
         self.strength = self.base_strength
         self.attacks = {
             "Quick Jab": {"method": self.attack_1, "stamina_cost": 10},
@@ -19,6 +19,11 @@ class Rogue(Character):
             "Phantom Strike": {"method": self.attack_4, "stamina_cost": 25},
             "Blade Flurry": {"method": self.attack_5, "stamina_cost": 60}
         }
+
+    def update_stats(self):
+        self.base_armor += int(self.level * 0.5)
+        self.base_strength += int(self.level * 0.5)
+        self.stamina_regeneration += int(self.level * 0.5)
 
     def regenerate_stamina(self):
         self.current_stamina = min(self.max_stamina, self.current_stamina + self.stamina_regeneration)

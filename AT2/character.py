@@ -1,5 +1,4 @@
 import pygame
-from healthBar import HealthBar
 
 class Character:
     MAX_LEVEL = 50  # Maximum level a character can reach
@@ -19,6 +18,7 @@ class Character:
         self.gold = 0  # Example starting value for character's gold
         self.attribute_points = 0  # Attribute points available to allocate
         self.attacks = {"Attack 1", "Attack 2"}
+
 
         self.player_position = [window.get_width() / 2, window.get_height() / 2] #set player postion in middle
         self.speed = 0.3 
@@ -66,6 +66,7 @@ class Character:
             print(f"Level up! {self.name} is now level {self.level}.")
             # Calculate experience required for next level
             required_experience = self.calculate_required_experience(self.level + 1)
+            return "Yes"
 
     def calculate_required_experience(self, level):
         # Example exponential scaling: Each level requires 100 more experience points than the previous level

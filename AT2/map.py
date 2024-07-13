@@ -31,10 +31,10 @@ class Map:
         self.player_type = None
         self.player = None
         self.enemies = [
-            Enemy(GAME_ASSETS["goblin"], [50, 50], self.window),
-            Enemy(GAME_ASSETS["orc"], [self.window.get_width() - 120, 50], self.window),
-            Enemy(GAME_ASSETS["skeleton"], [50, self.window.get_height() - 120], self.window),
-            Enemy(GAME_ASSETS["skeleton"], [self.window.get_width() - 120, self.window.get_height() - 120], self.window)
+            Enemy(GAME_ASSETS["goblin"], [50, 50], self.window, 1),
+            Enemy(GAME_ASSETS["orc"], [self.window.get_width() - 120, 50], self.window, 1),
+            Enemy(GAME_ASSETS["skeleton"], [50, self.window.get_height() - 120], self.window, 1),
+            Enemy(GAME_ASSETS["skeleton"], [self.window.get_width() - 120, self.window.get_height() - 120], self.window, 1)
         ]
 
         self.in_combat = False  # Ensure this attribute is defined in the constructor
@@ -87,7 +87,7 @@ class Map:
             int(player_damage)
             if int(player_damage):
                 self.current_enemy.take_damage(player_damage)
-                enemy_damage = random.randint(5, 10)
+                enemy_damage = self.current_enemy.deal_damage()
                 print(f"Enemy attacks back! Deals {enemy_damage} damage to the player.")
                 # Assume player has a method to take damage
                 self.player.take_damage(enemy_damage)
@@ -105,6 +105,8 @@ class Map:
                 self.player.gain_health(random.randint(5, 10))
                 self.player.armor = self.player.base_armor
                 self.player.strength = self.player.base_strength
+                if self.player.gain_experience(50) == "Yes":
+                    self.player.update_stats()
                 if not self.enemies:
                     self.spawn_blue_orb()
 
@@ -127,10 +129,10 @@ class Map:
             self.blue_orb = None
             self.wave_counter += 1
             self.enemies = [
-                Enemy(GAME_ASSETS["goblin"], [50, 50], self.window),
-                Enemy(GAME_ASSETS["orc"], [self.window.get_width() - 120, 50], self.window),
-                Enemy(GAME_ASSETS["skeleton"], [50, self.window.get_height() - 120], self.window),
-                Enemy(GAME_ASSETS["skeleton"], [self.window.get_width() - 120, self.window.get_height() - 120], self.window)
+                Enemy(GAME_ASSETS["goblin"], [50, 50], self.window, self.wave_counter),
+                Enemy(GAME_ASSETS["orc"], [self.window.get_width() - 120, 50], self.window, self.wave_counter),
+                Enemy(GAME_ASSETS["skeleton"], [50, self.window.get_height() - 120], self.window, self.wave_counter),
+                Enemy(GAME_ASSETS["skeleton"], [self.window.get_width() - 120, self.window.get_height() - 120], self.window, self.wave_counter)
             ]
 
     def handle_events(self):
@@ -150,6 +152,13 @@ class Map:
             if self.check_for_combat():
                 return
         self.handle_combat()
+
+        if self.player.current_hp <= 0:
+            if self.wave_counter <= 1:
+                print(f"Game Over! You survived no waves!")
+            else:
+                print(f"Game Over! You survived {self.wave_counter} waves!")
+            return "quit" 
 
         if self.blue_orb and self.check_orb_collision():
             #return 'quit'
