@@ -4,10 +4,10 @@ import random
 class Mage(Character):
     def __init__(self, name, max_hp, armor, window):
         super().__init__(name, "Mage", armor, window, max_hp)
-        self.max_stamina = 100
+        self.max_stamina = 85
         self.current_stamina = self.max_stamina
         self.stamina_regeneration = 50
-        self.base_armor = 1
+        self.base_armor = 2
         self.armor = self.base_armor
         self.base_strength = 19
         self.strength = self.base_strength

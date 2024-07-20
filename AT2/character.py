@@ -17,13 +17,10 @@ class Character:
         self.inventory = []  # Example empty list for character's inventory
         self.gold = 0  # Example starting value for character's gold
         self.attribute_points = 0  # Attribute points available to allocate
-        self.attacks = {"Attack 1", "Attack 2"}
-
 
         self.player_position = [window.get_width() / 2, window.get_height() / 2] #set player postion in middle
         self.speed = 0.3 
         
-
     def move(self, keys):
         if keys[pygame.K_a]:
             self.player_position[0] -= self.speed
@@ -84,9 +81,9 @@ class Character:
         else:
             print(f"{self.name} takes {actual_damage} damage. Remaining hit points: {self.current_hp}")
 
-    def gain_health(self, amount):
+    def gain_health(self, amount, max_hp):
         self.current_hp += amount
+        if self.current_hp >= max_hp:
+            self.current_hp = max_hp
         print(f"{self.name} heals {amount} health. Remaining hit points: {self.current_hp}")
-        if self.current_hp > 100:
-            self.current_hp = 100
 

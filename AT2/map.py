@@ -6,6 +6,7 @@ from enemy import Enemy
 from healthBar import HealthBar
 from character import Character
 from battle import Battle
+from staminaBar import StaminaBar
 
 #Character Types
 from mage import Mage 
@@ -53,9 +54,9 @@ class Map:
         if character_type == "Warrior":                             #Key: 3 = Good, 2 = Mid, 1 = Bad
             self.player = Warrior("Player", 120, 4, self.window) #Warrior has defense: 3, offense: 1, stamina: 2
         elif character_type == "Rogue":
-            self.player = Rogue("Player", 100, 3, self.window) #Rogue has defense: 2, offense: 2, stamina: 3
+            self.player = Rogue("Player", 80, 1, self.window) #Rogue has defense: 1, offense: 2, stamina: 3
         elif character_type == "Mage":
-            self.player = Mage("Player", 80, 2, self.window) #Mage has defense: 1, offense, 3, stamina: 2
+            self.player = Mage("Player", 100, 2, self.window) #Mage has defense: 2, offense, 3, stamina: 1
 
         self.player_type = character_type
         self.player_image = self.player_images[character_type]
@@ -102,7 +103,7 @@ class Map:
                 self.in_combat = False
                 self.current_enemy = None
                 self.player.regenerate_stamina()
-                self.player.gain_health(random.randint(5, 10))
+                self.player.gain_health(random.randint(5, 10), self.player.max_hp)
                 self.player.armor = self.player.base_armor
                 self.player.strength = self.player.base_strength
                 if self.player.gain_experience(50) == "Yes":
@@ -178,7 +179,8 @@ class Map:
         self.window.blit(self.map_image, (0, 0))
         self.window.blit(self.player_image, (self.player.player_position[0], self.player.player_position[1]))
         #Draw healthbar for player's character
-        HealthBar.drawRect(self.window, self.player.player_position[0], self.player.player_position[1] - 10, self.player.current_hp, self.player.max_hp)
+        HealthBar.drawRect(self.window, self.player.player_position[0], self.player.player_position[1] - 22, self.player.current_hp, self.player.max_hp)
+        StaminaBar.drawBar(self.window, self.player.player_position[0], self.player.player_position[1] - 10, self.player.current_stamina, self.player.max_stamina)
         self.track_wave_count()
         self.handle_combat()
         for enemy in self.enemies:

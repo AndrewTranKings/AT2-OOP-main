@@ -7,8 +7,8 @@ class Rogue(Character):
         # Additional attributes and methods specific to the Rogue class
         self.max_stamina = 115
         self.current_stamina = self.max_stamina
-        self.stamina_regeneration = 65
-        self.base_armor = 2
+        self.stamina_regeneration = 50
+        self.base_armor = 1
         self.armor = self.base_armor
         self.base_strength = 17 #Strength is 17
         self.strength = self.base_strength
@@ -42,7 +42,7 @@ class Rogue(Character):
         return(damage)
     
     def attack_2(self): #Shadow Blade
-        damage = self.strength + self.current_stamina * 0.3
+        damage = self.strength + self.current_stamina * 0.5
         print(f"{self.name} channels {self.current_stamina}% of their strength dealing {int(damage)} damage!")
         return(damage)
     
