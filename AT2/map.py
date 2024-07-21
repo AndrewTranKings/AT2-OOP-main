@@ -173,11 +173,22 @@ class Map:
 
                         
     def toggle_button(self):
-        skillsbutton = pygame.rect.Rect(368, 5, 65, 30)
+        skillsbutton = pygame.rect.Rect(368, 5, 100, 30)
         pygame.draw.rect(self.window, (220, 20, 60), skillsbutton)
+        TEXTCOLOUR = (0, 0, 0)
+        fontObj = pygame.font.SysFont(None, 25)
+        textSufaceObj = fontObj.render("Class Skills", True, TEXTCOLOUR, None)
+        text_rect = textSufaceObj.get_rect(center=skillsbutton.center)
+        self.window.blit(textSufaceObj, text_rect)
         position = pygame.mouse.get_pos()
+
         if skillsbutton.collidepoint(position):
             pygame.draw.rect(self.window, (176, 10, 25), skillsbutton)
+            fontObj = pygame.font.SysFont(None, 25)
+            textSufaceObj = fontObj.render("Class Skills", True, TEXTCOLOUR, None)
+            text_rect = textSufaceObj.get_rect(center=skillsbutton.center)
+            self.window.blit(textSufaceObj, text_rect)
+
             for event in pygame.event.get():
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if event.button == 1:

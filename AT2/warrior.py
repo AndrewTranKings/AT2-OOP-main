@@ -18,6 +18,10 @@ class Warrior(Character):
             "Shield Bash": {"method": self.attack_4, "stamina_cost": 25}, #11 Characters
             "Defensive Stance": {"method": self.attack_5, "stamina_cost": 15} #16 Characters
         }
+        self.skills = {
+            "Armor Up!": {"method": self.skill_1, "description": "Boosts armor"},
+            "Max Potion": {"method": self.skill_2, "description": "Restores to max hp"}
+        }
 
     def choose_attack(self, target):
         print(f"Choose an attack (Current stamina: {self.current_stamina}):")
@@ -86,3 +90,11 @@ class Warrior(Character):
         self.armor += 1  # Example: Defensive stance increases armor class by 2
         print(f"{self.name} enters a defensive stance, increasing armor to {self.armor}!")
         return(-1)
+    
+    def skill_1(self): #Amor Up!
+        self.base_armor += 4
+        print(f"{self.name} uses 'Armor Up!' to increase their base armor to {self.base_armor} permanently!")
+
+    def skill_2(self): #Max Health Potion
+        self.gain_health(self.max_hp)
+        print(f"{self.name} regenerates to full health!")

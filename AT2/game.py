@@ -53,8 +53,9 @@ class Game:
                     self.game_map.draw()  # Draw the game map
 
             elif self.state == "Skills Menu":
-                toggle = self.skills_menu.run()
+                toggle = self.skills_menu.run(self.game_map)
                 if toggle == 'Back':
+                    
                     self.skills_menu.go_back = False
                     self.state = 'game_map'
                 elif toggle == "Quit":
