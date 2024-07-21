@@ -2,7 +2,7 @@ import pygame
 from menu import MainMenu
 from character_select import CharacterSelect
 from map import Map
-from battle import Battle
+from ClassSkills import ClassSkills
 from assets import load_assets, GAME_ASSETS
 
 class Game:
@@ -13,6 +13,7 @@ class Game:
         self.menu = MainMenu(self.window)  # Create an instance of the MainMenu class
         self.character_select = CharacterSelect(self.window)  # Create an instance of the CharacterSelect class
         self.game_map = Map(self.window)  # Create an instance of the Map class
+        self.skills_menu = ClassSkills(self.window)
         self.state = 'menu'  # Set the initial state to 'menu'
         self.current_character = None  # To store the chosen character
 
@@ -45,8 +46,19 @@ class Game:
                 elif result == 'quit':  # If the result is 'quit'
                     pygame.quit()  # Quit pygame
                     return  # Exit the run method
+                elif result == "Skills Menu":
+                    self.game_map.open_skills_menu = False
+                    self.state = "Skills Menu"
                 else:
                     self.game_map.draw()  # Draw the game map
+
+            elif self.state == "Skills Menu":
+                toggle = self.skills_menu.run()
+                if toggle == 'Back':
+                    self.skills_menu.go_back = False
+                    self.state = 'game_map'
+                elif toggle == "Quit":
+                    pygame.quit()
 
             for event in pygame.event.get():  # Iterate over the events in the event queue
                 if event.type == pygame.QUIT:  # If the event type is QUIT

@@ -13,11 +13,11 @@ class Rogue(Character):
         self.base_strength = 17 #Strength is 17
         self.strength = self.base_strength
         self.attacks = {
-            "Quick Jab": {"method": self.attack_1, "stamina_cost": 10},
-            "Shadow Blade": {"method": self.attack_2, "stamina_cost": 50},
-            "Garrote": {"method": self.attack_3, "stamina_cost": 30},
-            "Phantom Strike": {"method": self.attack_4, "stamina_cost": 25},
-            "Blade Flurry": {"method": self.attack_5, "stamina_cost": 60}
+            "Quick Slash": {"method": self.attack_1, "stamina_cost": 10},
+            "Ambush": {"method": self.attack_2, "stamina_cost": 50}, 
+            "Silent Dagger": {"method": self.attack_3, "stamina_cost": 30},
+            "Fatal Strike": {"method": self.attack_4, "stamina_cost": 25},
+            "Phantom Vortex": {"method": self.attack_5, "stamina_cost": 60}
         }
 
     def update_stats(self):
@@ -36,24 +36,24 @@ class Rogue(Character):
         if self.current_stamina < 10:
             self.current_stamina += 10
 
-    def attack_1(self): #Quick Jab
+    def attack_1(self): #Quick Strike
         damage = self.strength
-        print(f"{self.name} jabs their enemy dealing {damage} damage!")
+        print(f"{self.name} stikes their enemy dealing {damage} damage!")
         return(damage)
     
-    def attack_2(self): #Shadow Blade
+    def attack_2(self): #Ambush
         damage = self.strength + self.current_stamina * 0.5
-        print(f"{self.name} channels {self.current_stamina}% of their strength dealing {int(damage)} damage!")
+        print(f"{self.name}'s ambush was {self.current_stamina}% effective dealing {int(damage)} damage!")
         return(damage)
     
-    def attack_3(self): #Garrote
+    def attack_3(self): #Silent Dagger
         damage = self.strength * 3
-        print(f"{self.name} strangulates the enemy for {int(damage)} damage!")
+        print(f"{self.name} stabs their enemy for {int(damage)} damage!")
         return(damage)
     
-    def attack_4(self): #Phantom Strike
+    def attack_4(self): #Fatal Strike
         damage = self.strength + random.randint(5, 25)
-        print(f"{self.name} unleashes their phantom for {damage} damage")
+        print(f"{self.name} punctures their enemy for {damage} damage")
         return(damage)
     
     def attack_5(self): #Blade Flurry

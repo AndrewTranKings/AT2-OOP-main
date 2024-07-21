@@ -12,11 +12,11 @@ class Warrior(Character):
         self.base_strength = 15
         self.strength = self.base_strength
         self.attacks = {
-            "Basic Attack": {"method": self.attack_1, "stamina_cost": 10},
-            "Charge": {"method": self.attack_2, "stamina_cost": 20},
-            "Cleave Attack": {"method": self.attack_3, "stamina_cost": 40},
-            "Shield Bash": {"method": self.attack_4, "stamina_cost": 25},
-            "Defensive Stance": {"method": self.attack_5, "stamina_cost": 15}
+            "Basic Attack": {"method": self.attack_1, "stamina_cost": 10}, #12 Characters
+            "Charge": {"method": self.attack_2, "stamina_cost": 20}, #6 Characters
+            "Cleave Attack": {"method": self.attack_3, "stamina_cost": 40}, #13 Characters
+            "Shield Bash": {"method": self.attack_4, "stamina_cost": 25}, #11 Characters
+            "Defensive Stance": {"method": self.attack_5, "stamina_cost": 15} #16 Characters
         }
 
     def choose_attack(self, target):

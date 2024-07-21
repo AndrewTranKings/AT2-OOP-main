@@ -6,6 +6,7 @@ from enemy import Enemy
 from healthBar import HealthBar
 from character import Character
 from battle import Battle
+from ClassSkills import ClassSkills
 from staminaBar import StaminaBar
 
 #Character Types
@@ -43,6 +44,7 @@ class Map:
         self.blue_orb = None
         self.game_over = False
         self.wave_counter = 1
+        self.open_skills_menu = False
 
     def load_player(self, character_type):
         """
@@ -165,6 +167,23 @@ class Map:
             #return 'quit'
             pass
 
+        if self.open_skills_menu:
+            return "Skills Menu"
+
+
+                        
+    def toggle_button(self):
+        skillsbutton = pygame.rect.Rect(368, 5, 65, 30)
+        pygame.draw.rect(self.window, (220, 20, 60), skillsbutton)
+        position = pygame.mouse.get_pos()
+        if skillsbutton.collidepoint(position):
+            pygame.draw.rect(self.window, (176, 10, 25), skillsbutton)
+            for event in pygame.event.get():
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if event.button == 1:
+                            self.open_skills_menu = True
+                            
+
     def track_wave_count(self):
         TEXTCOLOUR = (255, 255, 255)
         fontObj0 = pygame.font.SysFont("microsoftphagspa", 20)
@@ -183,6 +202,7 @@ class Map:
         StaminaBar.drawBar(self.window, self.player.player_position[0], self.player.player_position[1] - 10, self.player.current_stamina, self.player.max_stamina)
         self.track_wave_count()
         self.handle_combat()
+        self.toggle_button()
         for enemy in self.enemies:
             enemy.draw()
         if self.blue_orb:
