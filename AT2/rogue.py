@@ -2,24 +2,27 @@ from character import Character
 import random
 
 class Rogue(Character):
+    """
+    Rogue has the best stamina but the worst armor
+    """
     def __init__(self, name, max_hp, armor, window):
         super().__init__(name, "Rogue", armor, window, max_hp)
         # Additional attributes and methods specific to the Rogue class
-        self.max_stamina = 115
+        self.max_stamina = 115 #High stamina value
         self.current_stamina = self.max_stamina
         self.stamina_regeneration = 50
-        self.base_armor = 1
+        self.base_armor = 1 #Weak armor
         self.armor = self.base_armor
-        self.base_strength = 17 #Strength is 17
+        self.base_strength = 27
         self.strength = self.base_strength
-        self.attacks = {
+        self.attacks = { #Dictionary for attacks
             "Quick Slash": {"method": self.attack_1, "stamina_cost": 10},
             "Ambush": {"method": self.attack_2, "stamina_cost": 50}, 
             "Silent Dagger": {"method": self.attack_3, "stamina_cost": 30},
             "Fatal Strike": {"method": self.attack_4, "stamina_cost": 25},
             "Blade Flurry": {"method": self.attack_5, "stamina_cost": 60}
         }
-        self.skills = {
+        self.skills = { #Dictionary for skills
             "Tireless": {"method": self.skill_1, "description": "Go back to max stamina"},
             "Sneaky": {"method": self.skill_2, "description": "Increase strength by level"}
         }

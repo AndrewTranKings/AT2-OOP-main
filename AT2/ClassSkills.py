@@ -2,26 +2,30 @@ import pygame
 from assets import GAME_ASSETS
 
 class ClassSkills():
+    """
+    Controls everything inside the Class Skills menu
+    Is initialised by 'game.py' to switch states
+    """
 
     def __init__(self, window):
-        self.scroll_image = None
+        self.scroll_image = None #Holds the scroll background
         self.scroll_position = None
         self.window = window
-        self.back_image = pygame.image.load(GAME_ASSETS["skills_menu_background"]).convert_alpha()
-        self.back_image = pygame.transform.scale(self.back_image, (self.window.get_width(), self.window.get_height()))
-
         self.scroll_image = pygame.image.load(GAME_ASSETS["old_scroll"]).convert_alpha()
         self.scroll_image = pygame.transform.scale(self.scroll_image, (self.window.get_width(), self.window.get_height()))
-
-        self.go_back = False
-        self.back_button = pygame.Rect(self.window.get_width() / 2, self.window.get_height() - 50 - 30, 100, 30)
+        self.go_back = False #Boolean to switch between states
+        self.back_button = pygame.Rect(self.window.get_width() / 2, self.window.get_height() - 50 - 30, 100, 30) #Allows player return to game map
         self.font = pygame.font.Font(None, 36)  # Use a default font
         self.character = None
-        self.skill_names = []
-        self.active_skill_1 = True
+        self.skill_names = [] #List that holds the names of skills
+        self.active_skill_1 = True #Each class has 2 skills they can use
         self.active_skill_2 = True
 
     def drawButton(self):
+        """
+        Draws a back button that is used to return to the game map
+        """
+        #Same code from Battle.py
         returnButton = pygame.rect.Rect(568, self.window.get_height() - 120, 100, 30)
         pygame.draw.rect(self.window, (200, 200, 200), returnButton)
         back_text = self.font.render('Back', True, (0, 0, 0))
@@ -36,16 +40,19 @@ class ClassSkills():
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:
-                            self.go_back = True
+                            self.go_back = True #Change boolean to switch states
 
     def retrieve_skills(self, map):
+        #Adds the names of the skills to an empty list
         self.character = map.player
         for name in self.character.skills:
             self.skill_names.append(name)
         
             
     def draw_skill_buttons(self):
-        if self.active_skill_1:
+        #Creates two buttons for using skills
+        #Copied from battle.py
+        if self.active_skill_1: #If skill hasn't been used
             icon = pygame.rect.Rect(185, 150, 200, 90)
             pygame.draw.rect(self.window, (0, 150, 255), icon)
             back_text = self.font.render(self.skill_names[0], True, (0, 0, 0))
@@ -61,7 +68,7 @@ class ClassSkills():
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if event.button == 1:
                             self.character.skill_1()
-                            self.active_skill_1 = False
+                            self.active_skill_1 = False #Skill can only be used once
         else:
             icon = pygame.rect.Rect(185, 150, 200, 90)
             pygame.draw.rect(self.window, (128, 128, 128), icon)
@@ -107,25 +114,25 @@ class ClassSkills():
         TEXTCOLOUR = (0, 0, 0)
         fontObj = pygame.font.SysFont(None, 45)
         textSufaceObj = fontObj.render("Limit: One Time Use!", True, TEXTCOLOUR, None)
-        self.window.blit(textSufaceObj, (265, 85))
+        self.window.blit(textSufaceObj, (265, 85)) #Create text for the top of the scroll
 
         TEXTCOLOUR = (0, 0, 0)
         fontObj = pygame.font.SysFont("microsoftphagspa", 25)
         textSufaceObj = fontObj.render(self.character.skills[self.skill_names[0]]["description"], True, TEXTCOLOUR, None)
-        self.window.blit(textSufaceObj, (400, 175))
+        self.window.blit(textSufaceObj, (400, 175)) #Text for skill one description
 
         TEXTCOLOUR = (0, 0, 0)
         fontObj = pygame.font.SysFont("microsoftphagspa", 25)
         textSufaceObj = fontObj.render(self.character.skills[self.skill_names[1]]["description"], True, TEXTCOLOUR, None)
-        self.window.blit(textSufaceObj, (400, 350))
+        self.window.blit(textSufaceObj, (400, 350)) #Text for skill two description
                         
     def run(self, map):
         running = True
         while running:
-            self.retrieve_skills(map)
-            self.draw()
-            if self.go_back:
-                return 'Back'
+            self.retrieve_skills(map) #Get skill names
+            self.draw() #Draw buttons and text
+            if self.go_back: #If boolean is switched
+                return 'Back' #Change states
             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -137,5 +144,4 @@ class ClassSkills():
         self.window.blit(self.scroll_image, (0, 0))
         self.drawButton()
         self.draw_skill_buttons()
-        #self.drawBackButton()
         pygame.display.flip()

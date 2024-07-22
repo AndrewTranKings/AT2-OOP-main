@@ -3,6 +3,10 @@ import pygame
 class Character:
     MAX_LEVEL = 50  # Maximum level a character can reach
     ATTRIBUTE_POINTS_PER_LEVEL = 3  # Number of attribute points gained per level
+    """
+    The blueprint for all character classes -
+    All attributes shared by all classes are in this class
+    """
  
     def __init__(self, name, character_class, armor, window, max_hp):
         self.name = name  # Character's name
@@ -21,7 +25,7 @@ class Character:
         self.player_position = [window.get_width() / 2, window.get_height() / 2] #set player postion in middle
         self.speed = 0.4
         
-    def move(self, keys):
+    def move(self, keys): #Allows the player to move using W, A, S, D
         if keys[pygame.K_a]:
             self.player_position[0] -= self.speed
         if keys[pygame.K_d]:
@@ -81,7 +85,7 @@ class Character:
         else:
             print(f"{self.name} takes {actual_damage} damage. Remaining hit points: {self.current_hp}")
 
-    def gain_health(self, amount, max_hp):
+    def gain_health(self, amount, max_hp): #Gain health without exceeding the max hp
         self.current_hp += amount
         if self.current_hp >= max_hp:
             self.current_hp = max_hp

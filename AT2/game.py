@@ -4,6 +4,7 @@ from character_select import CharacterSelect
 from map import Map
 from ClassSkills import ClassSkills
 from gameOver import gameOver
+from settings import Settings
 from assets import load_assets, GAME_ASSETS
 
 class Game:
@@ -13,6 +14,7 @@ class Game:
         self.window = pygame.display.set_mode((800, 600))
         self.menu = MainMenu(self.window)  # Create an instance of the MainMenu class
         self.character_select = CharacterSelect(self.window)  # Create an instance of the CharacterSelect class
+        self.settings = Settings(self.window)
         self.game_map = Map(self.window)  # Create an instance of the Map class
         self.skills_menu = ClassSkills(self.window)
         self.gomenu = gameOver(self.window)
@@ -26,7 +28,7 @@ class Game:
                 if result == 'Start Game':  # If the result is 'Start Game'
                     self.state = 'character_select'  # Change the state to 'character_select'
                 elif result == 'Settings':  # If the result is 'Settings'
-                    pass  # Settings handling would go here
+                    self.state = 'settings'
                 elif result == 'Exit':  # If the result is 'Exit'
                     pygame.quit()  # Quit pygame
                     return  # Exit the run method
@@ -57,14 +59,17 @@ class Game:
                 if toggle == 'Back':
                     self.skills_menu.go_back = False
                     self.state = 'game_map'
-                elif toggle == "Quit":
-                    pygame.quit()
 
             elif self.state == "Game Over":
                 result = self.gomenu.run()
                 if result == "quit":
                     pygame.quit()
                     return
+                
+            elif self.state == "settings":
+                result = self.settings.run()
+                if result == "back":
+                    self.state = "menu"
 
             for event in pygame.event.get():  # Iterate over the events in the event queue
                 if event.type == pygame.QUIT:  # If the event type is QUIT

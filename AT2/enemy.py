@@ -26,6 +26,7 @@ class Enemy:
         self.level = level
 
     def deal_damage(self):
+        #Random damage value that increases depending on enemy level
         damage = random.randint(5, 10) + self.level
         return damage
 
