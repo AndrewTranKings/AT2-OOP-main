@@ -45,6 +45,7 @@ class Map:
         self.game_over = False
         self.wave_counter = 1
         self.open_skills_menu = False
+        self.battle_machine = Battle(self.window)
 
     def load_player(self, character_type):
         """
@@ -85,8 +86,8 @@ class Map:
         if self.in_combat and self.current_enemy:
             enemy_defeated = False
             enemy_health = self.current_enemy.health
-            player_damage = Battle.attacks(Battle, self.window, self.player, self.player.current_stamina)
-            Battle.draw_text(self.window, self.player)
+            player_damage = self.battle_machine.attacks(self.player, self.player.current_stamina)
+            #Battle.draw_text(self.window, self.player)
             int(player_damage)
             if int(player_damage):
                 self.current_enemy.take_damage(player_damage)
@@ -176,7 +177,7 @@ class Map:
         skillsbutton = pygame.rect.Rect(368, 5, 100, 30)
         pygame.draw.rect(self.window, (220, 20, 60), skillsbutton)
         TEXTCOLOUR = (0, 0, 0)
-        fontObj = pygame.font.SysFont(None, 25)
+        fontObj = pygame.font.SysFont("cambria", 20)
         textSufaceObj = fontObj.render("Class Skills", True, TEXTCOLOUR, None)
         text_rect = textSufaceObj.get_rect(center=skillsbutton.center)
         self.window.blit(textSufaceObj, text_rect)
@@ -184,7 +185,7 @@ class Map:
 
         if skillsbutton.collidepoint(position):
             pygame.draw.rect(self.window, (176, 10, 25), skillsbutton)
-            fontObj = pygame.font.SysFont(None, 25)
+            fontObj = pygame.font.SysFont("cambria", 20)
             textSufaceObj = fontObj.render("Class Skills", True, TEXTCOLOUR, None)
             text_rect = textSufaceObj.get_rect(center=skillsbutton.center)
             self.window.blit(textSufaceObj, text_rect)

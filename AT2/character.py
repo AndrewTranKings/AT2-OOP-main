@@ -8,7 +8,7 @@ class Character:
         self.name = name  # Character's name
         self.character_class = character_class  # Character's class
         self.armor = armor  # Character's armor value
-        self.level = 1  # Character's current level
+        self.level = 0  # Character's current level
         self.experience_points = 0  # Character's current experience points
         self.max_hp = max_hp #Character's maximum hp value
         self.current_hp = max_hp #Character's current hp value

@@ -21,8 +21,6 @@ class ClassSkills():
         self.active_skill_1 = True
         self.active_skill_2 = True
 
-        
-
     def drawButton(self):
         returnButton = pygame.rect.Rect(568, self.window.get_height() - 120, 100, 30)
         pygame.draw.rect(self.window, (200, 200, 200), returnButton)
@@ -62,7 +60,7 @@ class ClassSkills():
                 for event in pygame.event.get():
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if event.button == 1:
-                            print(self.character.skills[self.skill_names[0]]["description"])
+                            self.character.skill_1()
                             self.active_skill_1 = False
         else:
             icon = pygame.rect.Rect(185, 150, 200, 90)
@@ -91,7 +89,7 @@ class ClassSkills():
                 for event in pygame.event.get():
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if event.button == 1:
-                            print(self.skill_names[1])
+                            self.character.skill_2()
                             self.active_skill_2 = False
         else:
             icon2 = pygame.rect.Rect(185, 325, 200, 90)

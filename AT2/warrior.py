@@ -15,8 +15,8 @@ class Warrior(Character):
             "Basic Attack": {"method": self.attack_1, "stamina_cost": 10}, #12 Characters
             "Charge": {"method": self.attack_2, "stamina_cost": 20}, #6 Characters
             "Cleave Attack": {"method": self.attack_3, "stamina_cost": 40}, #13 Characters
-            "Shield Bash": {"method": self.attack_4, "stamina_cost": 25}, #11 Characters
-            "Defensive Stance": {"method": self.attack_5, "stamina_cost": 15} #16 Characters
+            "Shield Bash!": {"method": self.attack_4, "stamina_cost": 25}, #11 Characters
+            "Armor Stance": {"method": self.attack_5, "stamina_cost": 15} #16 Characters
         }
         self.skills = {
             "Armor Up!": {"method": self.skill_1, "description": "Boosts armor"},
@@ -96,5 +96,5 @@ class Warrior(Character):
         print(f"{self.name} uses 'Armor Up!' to increase their base armor to {self.base_armor} permanently!")
 
     def skill_2(self): #Max Health Potion
-        self.gain_health(self.max_hp)
+        self.gain_health(self.max_hp, self.max_hp)
         print(f"{self.name} regenerates to full health!")

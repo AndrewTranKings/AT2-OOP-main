@@ -17,7 +17,11 @@ class Rogue(Character):
             "Ambush": {"method": self.attack_2, "stamina_cost": 50}, 
             "Silent Dagger": {"method": self.attack_3, "stamina_cost": 30},
             "Fatal Strike": {"method": self.attack_4, "stamina_cost": 25},
-            "Phantom Vortex": {"method": self.attack_5, "stamina_cost": 60}
+            "Blade Flurry": {"method": self.attack_5, "stamina_cost": 60}
+        }
+        self.skills = {
+            "Tireless": {"method": self.skill_1, "description": "Go back to max stamina"},
+            "Sneaky": {"method": self.skill_2, "description": "Increase strength by level"}
         }
 
     def update_stats(self):
@@ -61,3 +65,10 @@ class Rogue(Character):
         print(f"{self.name} empties their cloak into the enemy for {damage} damage")
         return(damage)
 
+    def skill_1(self): #Tireless
+        self.current_stamina = self.max_stamina
+        print(f"{self.name} uses 'Tireless' to replenish all their stamina")
+
+    def skill_2(self): #Sneaky
+        self.base_strength += self.level
+        print(f"{self.name} adds {self.level} points onto their strength and is buffed to {self.base_strength} strength!")

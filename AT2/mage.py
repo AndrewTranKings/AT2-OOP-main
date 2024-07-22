@@ -16,7 +16,11 @@ class Mage(Character):
             "Arcane Bolt": {"method": self.attack_2, "stamina_cost": 20},
             "Void Beam": {"method": self.attack_3, "stamina_cost": 30},
             "Curse Spell": {"method": self.attack_4, "stamina_cost": 15},
-            "Empowerment Chant": {"method": self.attack_5, "stamina_cost": 60}
+            "Empowerment": {"method": self.attack_5, "stamina_cost": 60}
+        }
+        self.skills = {
+            "Regen Trade": {"method": self.skill_1, "description": "+ Stamina for health"},
+            "Cursed max": {"method": self.skill_2, "description": "Max hp but lose strength"}
         }
 
     def update_stats(self):
@@ -62,3 +66,16 @@ class Mage(Character):
         self.strength += self.base_strength * 0.2
         print(f"{self.name} increases their strength to {int(self.strength)}")
         return(-1)
+    
+    def skill_1(self): #Regen trade
+        self.stamina_regeneration += 20
+        self.current_stamina += 20
+        self.max_hp -= 20
+        self.current_hp -= 20
+        print(f"{self.name} permanently traded 20 stamina for 20 health!")
+
+    def skill_2(self): #Cursed max
+        self.gain_health(self.max_hp, self.max_hp)
+        self.base_armor += 1
+        self.base_strength -= 4
+        print(f"{self.name} gets full health and is now on {self.base_armor} armor and {self.base_strength} strength!")

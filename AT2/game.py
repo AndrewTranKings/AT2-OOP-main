@@ -37,8 +37,7 @@ class Game:
                 elif selected_character:  # If a character is selected
                     self.current_character = selected_character  # Set the current character to the selected character
                     self.game_map.load_player(selected_character)  # Load the selected character into the game map
-                    self.state = 'game_map'  # Change the state to 'game_map'
-
+                    self.state = 'game_map'  # Change the state to 'game_map's
             elif self.state == 'game_map':  # If the state is 'game_map'
                 result = self.game_map.handle_events()  # Handle events in the game map and get the result
                 if result == 'back':  # If the result is 'back'
