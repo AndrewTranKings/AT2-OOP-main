@@ -106,7 +106,7 @@ class Map:
                 self.in_combat = False
                 self.current_enemy = None
                 self.player.regenerate_stamina()
-                self.player.gain_health(random.randint(5, 10), self.player.max_hp)
+                self.player.gain_health(random.randint(1, 8), self.player.max_hp)
                 self.player.armor = self.player.base_armor
                 self.player.strength = self.player.base_strength
                 if self.player.gain_experience(50) == "Yes":

@@ -37,7 +37,6 @@ class Battle():
                         if event.button == 1:
                             player_damage = character_type.attack_1()
                             character_type.subtract_stamina(new_attacks[attack_name[0]]["stamina_cost"])
-                            print(pygame.font.get_fonts())
                         else:
                             pass
         else:

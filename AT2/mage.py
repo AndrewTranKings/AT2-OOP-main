@@ -16,7 +16,7 @@ class Mage(Character):
             "Arcane Bolt": {"method": self.attack_2, "stamina_cost": 20},
             "Void Beam": {"method": self.attack_3, "stamina_cost": 30},
             "Curse Spell": {"method": self.attack_4, "stamina_cost": 15},
-            "Empowerment": {"method": self.attack_5, "stamina_cost": 60}
+            "Empowerment": {"method": self.attack_5, "stamina_cost": 40}
         }
         self.skills = {
             "Regen Trade": {"method": self.skill_1, "description": "+ Stamina for health"},
@@ -45,7 +45,7 @@ class Mage(Character):
         return(damage)
     
     def attack_2(self): #Arcane Bolt
-        damage = self.strength * 1.6
+        damage = self.strength + self.level * 1.6
         print(f"The enemy takes {int(damage)} damage from {self.name}'s arcane bolt")
         return(damage)
     
@@ -63,7 +63,7 @@ class Mage(Character):
         return(damage)
     
     def attack_5(self): #Empowerment Chant
-        self.strength += self.base_strength * 0.2
+        self.strength += self.base_strength * 0.5
         print(f"{self.name} increases their strength to {int(self.strength)}")
         return(-1)
     

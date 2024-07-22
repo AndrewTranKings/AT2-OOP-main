@@ -51,17 +51,17 @@ class Rogue(Character):
         return(damage)
     
     def attack_3(self): #Silent Dagger
-        damage = self.strength * 3
+        damage = self.strength + self.level * 0.5
         print(f"{self.name} stabs their enemy for {int(damage)} damage!")
         return(damage)
     
     def attack_4(self): #Fatal Strike
-        damage = self.strength + random.randint(5, 25)
+        damage = self.strength * 3
         print(f"{self.name} punctures their enemy for {damage} damage")
         return(damage)
     
     def attack_5(self): #Blade Flurry
-        damage = self.strength * 4
+        damage = self.strength + random.randint(1, self.level + 5)
         print(f"{self.name} empties their cloak into the enemy for {damage} damage")
         return(damage)
 

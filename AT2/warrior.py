@@ -13,9 +13,9 @@ class Warrior(Character):
         self.strength = self.base_strength
         self.attacks = {
             "Basic Attack": {"method": self.attack_1, "stamina_cost": 10}, #12 Characters
-            "Charge": {"method": self.attack_2, "stamina_cost": 20}, #6 Characters
+            "Charge": {"method": self.attack_2, "stamina_cost": 35}, #6 Characters
             "Cleave Attack": {"method": self.attack_3, "stamina_cost": 40}, #13 Characters
-            "Shield Bash!": {"method": self.attack_4, "stamina_cost": 25}, #11 Characters
+            "Shield Bash!": {"method": self.attack_4, "stamina_cost": 20}, #11 Characters
             "Armor Stance": {"method": self.attack_5, "stamina_cost": 15} #16 Characters
         }
         self.skills = {
@@ -71,7 +71,7 @@ class Warrior(Character):
     def attack_2(self): #Charge
         damage = self.strength * 2
         print(f"{self.name} charges towards the enemy for {damage} damage!")
-        block = random.randint(1, self.level + 2)
+        block = random.randint(1, 5)
         self.gain_health(block, self.max_hp)
         print(f"{self.name}'s shield blocked {block} damage")
         return(damage)  # Example: Charge deals damage equal to the warrior's strength
@@ -92,7 +92,7 @@ class Warrior(Character):
         return(-1)
     
     def skill_1(self): #Amor Up!
-        self.base_armor += 4
+        self.base_armor += 2
         print(f"{self.name} uses 'Armor Up!' to increase their base armor to {self.base_armor} permanently!")
 
     def skill_2(self): #Max Health Potion
