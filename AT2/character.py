@@ -25,26 +25,37 @@ class Character:
         self.player_position = [window.get_width() / 2, window.get_height() / 2] #set player postion in middle
         self.speed = 0.4
         
-    def move(self, keys): #Allows the player to move using W, A, S, D
-        if keys[pygame.K_a]:
-            self.player_position[0] -= self.speed
-        if keys[pygame.K_d]:
-            self.player_position[0] += self.speed
-        if keys[pygame.K_w]:
-            self.player_position[1] -= self.speed
-        if keys[pygame.K_s]:
-            self.player_position[1] += self.speed
+    def move(self, keys, in_combat): #Allows the player to move using W, A, S, D
+        if in_combat == False:
+            if keys[pygame.K_a]:
+                self.player_position[0] -= self.speed
+            if keys[pygame.K_d]:
+                self.player_position[0] += self.speed
+            if keys[pygame.K_w]:
+                self.player_position[1] -= self.speed
+            if keys[pygame.K_s]:
+                self.player_position[1] += self.speed
 
-        #Define boundaries for the player's movement
-        if self.player_position[0] <= 0:
-            self.player_position[0] = 0
-        if self.player_position[1] <= 10:
-            self.player_position[1] = 10
-        if self.player_position[0] >= 790:
-            self.player_position[0] = 790
-        if self.player_position[1] >= 590:
-            self.player_position[1] = 590
-    #This ensures the player can't exit the dimensions of the screen
+            #Define boundaries for the player's movement
+            if self.player_position[0] <= 0:
+                self.player_position[0] = 0
+            if self.player_position[1] <= 10:
+                self.player_position[1] = 10
+            if self.player_position[0] >= 790:
+                self.player_position[0] = 790
+            if self.player_position[1] >= 590:
+                self.player_position[1] = 590
+        #This ensures the player can't exit the dimensions of the screen
+
+        elif in_combat:
+            if keys[pygame.K_a]:
+                self.player_position[0] -= 0
+            if keys[pygame.K_d]:
+                self.player_position[0] += 0
+            if keys[pygame.K_w]:
+                self.player_position[1] -= 0
+            if keys[pygame.K_s]:
+                self.player_position[1] += 0
 
     def assign_attribute_points(self, attribute, points):
         # Ensure the attribute exists before assigning points

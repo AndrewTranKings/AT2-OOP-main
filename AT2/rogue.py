@@ -11,14 +11,14 @@ class Rogue(Character):
         self.max_stamina = 115 #High stamina value
         self.current_stamina = self.max_stamina
         self.stamina_regeneration = 50
-        self.base_armor = 1 #Weak armor
+        self.base_armor = 2 #Weak armor
         self.armor = self.base_armor
         self.base_strength = 27
         self.strength = self.base_strength
         self.attacks = { #Dictionary for attacks
             "Quick Slash": {"method": self.attack_1, "stamina_cost": 10},
             "Ambush": {"method": self.attack_2, "stamina_cost": 50}, 
-            "Silent Dagger": {"method": self.attack_3, "stamina_cost": 30},
+            "Silent Dagger": {"method": self.attack_3, "stamina_cost": 25},
             "Fatal Strike": {"method": self.attack_4, "stamina_cost": 25},
             "Blade Flurry": {"method": self.attack_5, "stamina_cost": 60}
         }
@@ -49,17 +49,17 @@ class Rogue(Character):
         return(damage)
     
     def attack_2(self): #Ambush
-        damage = self.strength + self.current_stamina * 0.5
+        damage = self.strength + self.current_stamina * 0.55
         print(f"{self.name}'s ambush was {self.current_stamina}% effective dealing {int(damage)} damage!")
         return(damage)
     
     def attack_3(self): #Silent Dagger
-        damage = self.strength + self.level * 0.5
+        damage = self.strength + self.level
         print(f"{self.name} stabs their enemy for {int(damage)} damage!")
         return(damage)
     
     def attack_4(self): #Fatal Strike
-        damage = self.strength * 3
+        damage = self.strength * 2.5
         print(f"{self.name} punctures their enemy for {damage} damage")
         return(damage)
     

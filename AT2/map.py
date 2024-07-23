@@ -4,11 +4,8 @@ import pygame
 from assets import GAME_ASSETS
 from enemy import Enemy
 from healthBar import HealthBar
-from character import Character
 from battle import Battle
-from ClassSkills import ClassSkills
 from staminaBar import StaminaBar
-from SaveLoadManager import SaveLoadSystem
 
 #Character Types
 from mage import Mage 
@@ -47,9 +44,7 @@ class Map:
         self.game_over = False
         self.wave_counter = 1 #Start on wave one
         self.open_skills_menu = False #Switch to open skills menu
-        self.saveloadmanager = SaveLoadSystem(".save", "save_data")
         self.battle_machine = Battle(self.window) #Instance of the battle class
-        #self.player.current_hp = self.saveloadmanager.load_data("player_health")
 
     def load_player(self, character_type):
         """
@@ -153,7 +148,7 @@ class Map:
             return 'quit'  # Stop processing events if game is over
 
         keys = pygame.key.get_pressed()
-        self.player.move(keys)
+        self.player.move(keys, self.in_combat)
 
         if not self.in_combat:
             if self.check_for_combat():
@@ -171,6 +166,8 @@ class Map:
 
         if self.open_skills_menu:
             return "Skills Menu" #Change state to skills menu
+        
+        self.check_orb_collision()
                      
     def toggle_button(self):
         """

@@ -22,7 +22,7 @@ class Mage(Character):
             "Empowerment": {"method": self.attack_5, "stamina_cost": 40}
         }
         self.skills = { #Dictionary that holds Mage's skills
-            "Regen Trade": {"method": self.skill_1, "description": "+ Stamina for health"},
+            "Regen Trade": {"method": self.skill_1, "description": "Stamina for health"},
             "Cursed max": {"method": self.skill_2, "description": "Max hp but lose strength"}
         }
 
@@ -48,12 +48,12 @@ class Mage(Character):
         return(damage)
     
     def attack_2(self): #Arcane Bolt
-        damage = self.strength + self.level * 1.6
+        damage = self.strength + self.current_stamina * 0.6
         print(f"The enemy takes {int(damage)} damage from {self.name}'s arcane bolt")
         return(damage)
     
     def attack_3(self): #Void Beam
-        damage = self.strength * 2.3
+        damage = self.strength * 2.7
         print(f"{self.name} casts a void beam dealing {int(damage)} damage")
         return(damage)
     

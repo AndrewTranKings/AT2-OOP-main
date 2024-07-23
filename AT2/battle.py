@@ -121,7 +121,7 @@ class Battle():
                 text_rect = back_text.get_rect(center=icon3.center)
                 self.window.blit(back_text, text_rect)
 
-        if current_stamina >= new_attacks[attack_name[3]]["stamina_cost"] and level >= 15: #Level 15 for this attack
+        if current_stamina >= new_attacks[attack_name[3]]["stamina_cost"] and level >= 7: #Level 7 for this attack
             icon4 = pygame.rect.Rect(425, 250, 200, 90) #Button 4
             pygame.draw.rect(self.window, (0, 255, 0), icon4)
             back_text = self.font.render(attack_name[3], True, (0, 0, 0))
@@ -150,7 +150,7 @@ class Battle():
                 text_rect = back_text.get_rect(center=icon4.center)
                 self.window.blit(back_text, text_rect)
 
-        if current_stamina >= new_attacks[attack_name[4]]["stamina_cost"] and level >= 20: #Level 20 unlock
+        if current_stamina >= new_attacks[attack_name[4]]["stamina_cost"] and level >= 10: #Level 10 unlock
             icon5 = pygame.rect.Rect(305, 350, 200, 90) #Button 5
             pygame.draw.rect(self.window, (191, 64, 191), icon5)
             back_text = self.font.render(attack_name[4], True, (0, 0, 0))
