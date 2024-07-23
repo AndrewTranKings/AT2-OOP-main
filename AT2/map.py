@@ -16,20 +16,17 @@ from warrior import Warrior
 from rogue import Rogue
 
 class Map:
-    #Attributes
-    __window = None
 
-
-    def __init__(self, __window):
+    def __init__(self, window):
         """
         Initialize the Map class.
 
         Args:
-            __window (pygame.Surface): The game __window surface.
+            window (pygame.Surface): The game window surface.
         """
-        self.__window = __window
+        self.window = window
         self.map_image = pygame.image.load(GAME_ASSETS["dungeon_map"]).convert_alpha()
-        self.map_image = pygame.transform.scale(self.map_image, (self.__window.get_width(), self.__window.get_height()))
+        self.map_image = pygame.transform.scale(self.map_image, (self.window.get_width(), self.window.get_height()))
         self.player_images = {
             'Warrior': pygame.image.load(GAME_ASSETS['warrior']).convert_alpha(),
             'Mage': pygame.image.load(GAME_ASSETS['mage']).convert_alpha(),
@@ -38,10 +35,10 @@ class Map:
         self.player_type = None
         self.player = None
         self.enemies = [
-            Enemy(GAME_ASSETS["goblin"], [50, 50], self.__window, 1), #Enemies set to level one initially
-            Enemy(GAME_ASSETS["orc"], [self.__window.get_width() - 120, 50], self.__window, 1),
-            Enemy(GAME_ASSETS["skeleton"], [50, self.__window.get_height() - 120], self.__window, 1),
-            Enemy(GAME_ASSETS["skeleton"], [self.__window.get_width() - 120, self.__window.get_height() - 120], self.__window, 1)
+            Enemy(GAME_ASSETS["goblin"], [50, 50], self.window, 1), #Enemies set to level one initially
+            Enemy(GAME_ASSETS["orc"], [self.window.get_width() - 120, 50], self.window, 1),
+            Enemy(GAME_ASSETS["skeleton"], [50, self.window.get_height() - 120], self.window, 1),
+            Enemy(GAME_ASSETS["skeleton"], [self.window.get_width() - 120, self.window.get_height() - 120], self.window, 1)
         ]
 
         self.in_combat = False  # Ensure this attribute is defined in the constructor
@@ -51,7 +48,7 @@ class Map:
         self.wave_counter = 1 #Start on wave one
         self.open_skills_menu = False #Switch to open skills menu
         self.saveloadmanager = SaveLoadSystem(".save", "save_data")
-        self.battle_machine = Battle(self.__window) #Instance of the battle class
+        self.battle_machine = Battle(self.window) #Instance of the battle class
         #self.player.current_hp = self.saveloadmanager.load_data("player_health")
 
     def load_player(self, character_type):
@@ -62,11 +59,11 @@ class Map:
             character_type (str): The type of character to load.
         """
         if character_type == "Warrior":                             #Key: 3 = Good, 2 = Mid, 1 = Bad
-            self.player = Warrior("Player", 120, 4, self.__window) #Warrior has defense: 3, offense: 1, stamina: 2
+            self.player = Warrior("Player", 120, 4, self.window) #Warrior has defense: 3, offense: 1, stamina: 2
         elif character_type == "Rogue":
-            self.player = Rogue("Player", 80, 1, self.__window) #Rogue has defense: 1, offense: 2, stamina: 3
+            self.player = Rogue("Player", 80, 1, self.window) #Rogue has defense: 1, offense: 2, stamina: 3
         elif character_type == "Mage":
-            self.player = Mage("Player", 100, 2, self.__window) #Mage has defense: 2, offense, 3, stamina: 1
+            self.player = Mage("Player", 100, 2, self.window) #Mage has defense: 2, offense, 3, stamina: 1
 
         self.player_type = character_type
         self.player_image = self.player_images[character_type]
@@ -126,7 +123,7 @@ class Map:
         """
         self.blue_orb = pygame.image.load(GAME_ASSETS["blue_orb"]).convert_alpha()
         self.blue_orb = pygame.transform.scale(self.blue_orb, (50, 50))
-        self.orb_position = [self.__window.get_width() / 2 - 25, self.__window.get_height() / 2 - 25]
+        self.orb_position = [self.window.get_width() / 2 - 25, self.window.get_height() / 2 - 25]
 
     def check_orb_collision(self):
         """
@@ -139,10 +136,10 @@ class Map:
             self.blue_orb = None #Make orb disappear
             self.wave_counter += 1 #Increment wave counter
             self.enemies = [ #Respawn all enemies with levels equal to the current wave
-                Enemy(GAME_ASSETS["goblin"], [50, 50], self.__window, self.wave_counter), #As waves go on, enemies get stronger
-                Enemy(GAME_ASSETS["orc"], [self.__window.get_width() - 120, 50], self.__window, self.wave_counter),
-                Enemy(GAME_ASSETS["skeleton"], [50, self.__window.get_height() - 120], self.__window, self.wave_counter),
-                Enemy(GAME_ASSETS["skeleton"], [self.__window.get_width() - 120, self.__window.get_height() - 120], self.__window, self.wave_counter)
+                Enemy(GAME_ASSETS["goblin"], [50, 50], self.window, self.wave_counter), #As waves go on, enemies get stronger
+                Enemy(GAME_ASSETS["orc"], [self.window.get_width() - 120, 50], self.window, self.wave_counter),
+                Enemy(GAME_ASSETS["skeleton"], [50, self.window.get_height() - 120], self.window, self.wave_counter),
+                Enemy(GAME_ASSETS["skeleton"], [self.window.get_width() - 120, self.window.get_height() - 120], self.window, self.wave_counter)
             ]
 
     def handle_events(self):
@@ -181,19 +178,19 @@ class Map:
         switch between the player skills screeen and the battle map.
         """
         skillsbutton = pygame.rect.Rect(368, 5, 100, 30) #Button code from battle.py
-        pygame.draw.rect(self.__window, (220, 20, 60), skillsbutton)
+        pygame.draw.rect(self.window, (220, 20, 60), skillsbutton)
         TEXTCOLOUR = (0, 0, 0)
         fontObj = pygame.font.SysFont("cambria", 20) #New font for distinguishing purposes
         textSufaceObj = fontObj.render("Class Skills", True, TEXTCOLOUR, None)
         text_rect = textSufaceObj.get_rect(center=skillsbutton.center)
-        self.__window.blit(textSufaceObj, text_rect)
+        self.window.blit(textSufaceObj, text_rect)
         position = pygame.mouse.get_pos()
         if skillsbutton.collidepoint(position): #If hovered over
-            pygame.draw.rect(self.__window, (176, 10, 25), skillsbutton)
+            pygame.draw.rect(self.window, (176, 10, 25), skillsbutton)
             fontObj = pygame.font.SysFont("cambria", 20)
             textSufaceObj = fontObj.render("Class Skills", True, TEXTCOLOUR, None)
             text_rect = textSufaceObj.get_rect(center=skillsbutton.center)
-            self.__window.blit(textSufaceObj, text_rect)
+            self.window.blit(textSufaceObj, text_rect)
 
             for event in pygame.event.get():
                     if event.type == pygame.MOUSEBUTTONDOWN:
@@ -208,23 +205,23 @@ class Map:
         TEXTCOLOUR = (255, 255, 255)
         fontObj0 = pygame.font.SysFont("microsoftphagspa", 20) #Wave counter in top left
         textSufaceObj0 = fontObj0.render(f"Wave: {self.wave_counter}", True, TEXTCOLOUR, None)
-        self.__window.blit(textSufaceObj0, (5, 5))
+        self.window.blit(textSufaceObj0, (5, 5))
 
     def draw(self):
         """
-        Draw the game objects on the __window.
+        Draw the game objects on the window.
         """
-        self.__window.fill((0, 0, 0))
-        self.__window.blit(self.map_image, (0, 0))
-        self.__window.blit(self.player_image, (self.player.player_position[0], self.player.player_position[1]))
+        self.window.fill((0, 0, 0))
+        self.window.blit(self.map_image, (0, 0))
+        self.window.blit(self.player_image, (self.player.player_position[0], self.player.player_position[1]))
         #Draw healthbar for player's character
-        HealthBar.drawRect(self.__window, self.player.player_position[0], self.player.player_position[1] - 22, self.player.current_hp, self.player.max_hp)
-        StaminaBar.drawBar(self.__window, self.player.player_position[0], self.player.player_position[1] - 10, self.player.current_stamina, self.player.max_stamina)
+        HealthBar.drawRect(self.window, self.player.player_position[0], self.player.player_position[1] - 22, self.player.current_hp, self.player.max_hp)
+        StaminaBar.drawBar(self.window, self.player.player_position[0], self.player.player_position[1] - 10, self.player.current_stamina, self.player.max_stamina)
         self.track_wave_count() #Draw wave counter
         self.handle_combat() #Draw battle buttons
         self.toggle_button() #Draw skills menu button
         for enemy in self.enemies:
             enemy.draw()
         if self.blue_orb:
-            self.__window.blit(self.blue_orb, self.orb_position) #Draw blue orb
+            self.window.blit(self.blue_orb, self.orb_position) #Draw blue orb
         pygame.display.flip()
