@@ -175,11 +175,11 @@ class Character:
         # Calculate experience required for next level
         required_experience = self.calculate_required_experience(self.level + 1)
         # Check if character has enough experience to level up and is below the level cap
-        while self.experience_points >= required_experience and self.level < self.MAX_LEVEL:
+        while self.experience_points >= required_experience and self.level < self.__MAX_LEVEL:
             self.level += 1  # Level up the character
             self.experience_points -= required_experience  # Decrease character's experience points
             self.current_hp = min(self.max_hp, self.current_hp + 10)  # Example: Increase hit points by 10 each level up
-            self.attribute_points += self.ATTRIBUTE_POINTS_PER_LEVEL  # Allocate attribute points
+            self.attribute_points += self.__ATTRIBUTE_POINTS_PER_LEVEL  # Allocate attribute points
             print(f"Level up! {self.name} is now level {self.level}.")
             # Calculate experience required for next level
             required_experience = self.calculate_required_experience(self.level + 1)

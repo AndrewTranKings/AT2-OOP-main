@@ -25,6 +25,9 @@ class Enemy:
         #Set the inital level of the enemy
         self.level = level
 
+        #Initalise the health bar class
+        self.helath_bar = HealthBar(self.window)
+
     def deal_damage(self):
         #Random damage value that increases depending on enemy level
         damage = random.randint(5, 10) + self.level
@@ -44,7 +47,7 @@ class Enemy:
             max(0, min(self.window.get_height() - self.image.get_height(), self.position[1]))
         ]
         #Draw the healthbars for enemies
-        HealthBar.drawRect(self.window, self.position[0], self.position[1] - 10, self.health, self.max_health)
+        self.helath_bar.drawRect(self.position[0], self.position[1] - 10, self.health, self.max_health)
 
         # Draw the enemy image on the window at the adjusted position
         self.window.blit(self.image, adjusted_position)

@@ -35,6 +35,12 @@ class Map:
         self.window = window
         self.map_image = pygame.image.load(GAME_ASSETS["dungeon_map"]).convert_alpha()
         self.map_image = pygame.transform.scale(self.map_image, (self.window.get_width(), self.window.get_height()))
+        self.ice_map_image = pygame.image.load(GAME_ASSETS["ice_battle_map"]).convert_alpha()
+        self.ice_map_image = pygame.transform.scale(self.ice_map_image, (self.window.get_width(), self.window.get_height()))
+        self.savanna_map_image = pygame.image.load(GAME_ASSETS["savanna_battle_map"]).convert_alpha()
+        self.savanna_map_image = pygame.transform.scale(self.savanna_map_image, (self.window.get_width(), self.window.get_height()))
+        self.crept_map_image = pygame.image.load(GAME_ASSETS["crept_battle_map"]).convert_alpha()
+        self.crept_map_image = pygame.transform.scale(self.crept_map_image, (self.window.get_width(), self.window.get_height()))
         self.player_images = {
             'Warrior': pygame.image.load(GAME_ASSETS['warrior']).convert_alpha(),
             'Mage': pygame.image.load(GAME_ASSETS['mage']).convert_alpha(),
@@ -56,6 +62,8 @@ class Map:
         self.wave_counter = 1 #Start on wave one
         self.open_skills_menu = False #Switch to open skills menu
         self.battle_machine = Battle(self.window) #Instance of the battle class
+        self.health_bar = HealthBar(self.window) #Instance of the health bar class
+        self.stamina_bar = StaminaBar(self.window) #Instance of the stamina bar class
 
 #Getters and Setters
     def getWindow(self):
@@ -239,8 +247,6 @@ class Map:
                 print(f"Game Over! You survived no waves!")
             else:
                 print(f"Game Over! You survived {self.wave_counter} waves!")
-            self.saveloadmanager.save_data(self.player, "player_type")
-            self.saveloadmanager.save_data(self.player.current_hp, "player_health")
             return "quit"
 
         if self.open_skills_menu:
@@ -279,21 +285,41 @@ class Map:
         Creates a counter that increments every time the player collects the blue orb
         """
         TEXTCOLOUR = (255, 255, 255)
-        fontObj0 = pygame.font.SysFont("microsoftphagspa", 20) #Wave counter in top left
+        fontObj0 = pygame.font.SysFont("microsoftphagspa", 20) #Level Counter is in top right
         textSufaceObj0 = fontObj0.render(f"Wave: {self.wave_counter}", True, TEXTCOLOUR, None)
         self.window.blit(textSufaceObj0, (5, 5))
+
+    def track_player_level(self):
+        """
+        Creates a live count of the player's level
+        """
+        TEXTCOLOUR = (255, 255, 255)
+        fontObj0 = pygame.font.SysFont("microsoftphagspa", 20) #Wave counter in top left
+        textSufaceObj0 = fontObj0.render(f"Level: {self.player.level}", True, TEXTCOLOUR, None)
+        self.window.blit(textSufaceObj0, (720, 5))
 
     def draw(self):
         """
         Draw the game objects on the window.
         """
         self.window.fill((0, 0, 0))
-        self.window.blit(self.map_image, (0, 0))
+        if self.wave_counter < 5: #up to wave 5
+            self.window.blit(self.map_image, (0, 0))
+        elif self.wave_counter >= 5 and self.wave_counter < 10: #Between wave 5 and 9
+            self.window.blit(self.ice_map_image, (0, 0))
+        elif self.wave_counter >= 10 and self.wave_counter < 15: #Between wave 10 and 14
+            self.window.blit(self.crept_map_image, (0, 0))
+        elif self.wave_counter >= 15 and self.wave_counter < 20: #Between wave 15 and 19
+            self.window.blit(self.savanna_map_image, (0, 0))
+        elif self.wave_counter >= 20: #Wave 20 and on
+            self.window.blit(self.map_image, (0, 0))
+        
         self.window.blit(self.player_image, (self.player.player_position[0], self.player.player_position[1]))
         #Draw healthbar for player's character
-        HealthBar.drawRect(self.window, self.player.player_position[0], self.player.player_position[1] - 22, self.player.current_hp, self.player.max_hp)
-        StaminaBar.drawBar(self.window, self.player.player_position[0], self.player.player_position[1] - 10, self.player.current_stamina, self.player.max_stamina)
+        self.health_bar.drawRect(self.player.player_position[0], self.player.player_position[1] - 22, self.player.current_hp, self.player.max_hp)
+        self.stamina_bar.drawBar(self.player.player_position[0], self.player.player_position[1] - 10, self.player.current_stamina, self.player.max_stamina)
         self.track_wave_count() #Draw wave counter
+        self.track_player_level() #Draw player level counter
         self.handle_combat() #Draw battle buttons
         self.toggle_button() #Draw skills menu button
         for enemy in self.enemies:

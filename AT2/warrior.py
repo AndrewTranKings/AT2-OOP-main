@@ -17,8 +17,8 @@ class Warrior(Character):
         self.attacks = { #Dictionary for attacks
             "Basic Attack": {"method": self.attack_1, "stamina_cost": 10}, #12 Characters
             "Charge": {"method": self.attack_2, "stamina_cost": 35}, #6 Characters
-            "Cleave Attack": {"method": self.attack_3, "stamina_cost": 40}, #13 Characters
-            "Shield Bash!": {"method": self.attack_4, "stamina_cost": 20}, #11 Characters
+            "Cleave Attack": {"method": self.attack_3, "stamina_cost": 45}, #13 Characters
+            "Shield Bash!": {"method": self.attack_4, "stamina_cost": 25}, #11 Characters
             "Armor Stance": {"method": self.attack_5, "stamina_cost": 15} #16 Characters
         }
         self.skills = { #Dictionary for skills
@@ -48,15 +48,15 @@ class Warrior(Character):
         return(damage)
 
     def attack_2(self): #Charge
-        damage = self.strength * 2
-        print(f"{self.name} charges towards the enemy for {damage} damage!")
+        damage = self.strength * 1.4
+        print(f"{self.name} charges towards the enemy for {int(damage)} damage!")
         block = random.randint(1, 5)
         self.gain_health(block, self.max_hp)
         print(f"{self.name}'s shield blocked {block} damage")
-        return(damage)  # Example: Charge deals damage equal to the warrior's strength
+        return(int(damage))  # Example: Charge deals damage equal to the warrior's strength
 
     def attack_3(self): #Cleave Attack
-        damage = self.strength * 3  # Example: Cleave attack deals double the warrior's strength
+        damage = self.strength * 2.3  # Example: Cleave attack deals double the warrior's strength
         print(f"{self.name} cleaves the enemy for {damage} damage!")
         return(damage)
 
