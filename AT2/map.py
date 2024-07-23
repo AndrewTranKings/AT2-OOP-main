@@ -13,6 +13,17 @@ from warrior import Warrior
 from rogue import Rogue
 
 class Map:
+    __window = None
+    __map_image = None
+    __player_images = {}
+    __player_type = None
+    __player = None
+    __enemies = []
+    __in_combat = False #Boolean start on False
+    __current_enemy = None
+    __blue_orb = None
+    __game_over = None
+    __wave_counter = 1 #Start on wave one
 
     def __init__(self, window):
         """
@@ -46,6 +57,74 @@ class Map:
         self.open_skills_menu = False #Switch to open skills menu
         self.battle_machine = Battle(self.window) #Instance of the battle class
 
+#Getters and Setters
+    def getWindow(self):
+        return self.__window
+    
+    def setWindow(self, window):
+        self.__window = window
+
+    def getMapImage(self):
+        return self.__map_image
+    
+    def setMapImage(self, img):
+        self.__map_image = img
+
+    def getPlayerImages(self):
+        return self.__player_images
+    
+    def setPlayerImages(self, pimg):
+        self.__player_images = pimg
+
+    def getPlayerType(self):
+        return self.__player_type
+    
+    def setPlayerType(self, type):
+        self.__player_type = type
+
+    def getPlayer(self):
+        return self.__player
+    
+    def setPlayer(self, player):
+        self.__player = player
+
+    def getEnemies(self):
+        return self.__enemies
+    
+    def setEnemies(self, enemies):
+        self.__enemies = enemies
+
+    def getInCombat(self):
+        return self.__in_combat
+    
+    def setInCombat(self, combat):
+        self.__in_combat = combat
+
+    def getCurrentEnemy(self):
+        return self.__current_enemy
+    
+    def setCurrentEnemy(self, enemy):
+        self.__current_enemy = enemy
+
+    def getBlueOrb(self):
+        return self.__blue_orb
+    
+    def setBlueOrb(self, blue):
+        self.__blue_orb = blue
+
+    def getGameOver(self):
+        return self.__game_over
+    
+    def setGameOver(self, over):
+        self.__game_over = over
+
+    def getWaveCounter(self):
+        return self.__wave_counter
+    
+    def setWaveCounter(self, wave):
+        self.__wave_counter = wave
+    
+    #Load player Method------------------------
     def load_player(self, character_type):
         """
         Load the player character.

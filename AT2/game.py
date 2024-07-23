@@ -8,6 +8,11 @@ from settings import Settings
 from assets import load_assets, GAME_ASSETS
 
 class Game:
+    """
+    Acts as the 'main' file for King's Quest
+    All 'run' methods are ran here and this class is used to change the state of the game
+    Initialises the window and other attributes that are shared throughout the game
+    """
     def __init__(self):
         pygame.init()
         load_assets()  # load the game image assets

@@ -1,11 +1,26 @@
 import pygame
 
 class Character:
-    MAX_LEVEL = 50  # Maximum level a character can reach
-    ATTRIBUTE_POINTS_PER_LEVEL = 3  # Number of attribute points gained per level
+    __MAX_LEVEL = 50  # Maximum level a character can reach
+    __ATTRIBUTE_POINTS_PER_LEVEL = 3  # Number of attribute points gained per level
+    __name = None
+    __character_class = None
+    __armor = 0
+    __level = 0
+    __experience_points = None
+    __hit_points = None
+    __armor_class = 0
+    __skills = {}
+    __inventory = []
+    __gold = 0
+    __attribute_points = 0
+    __player_position = None
+    __speed = 0.0
+
     """
     The blueprint for all character classes -
-    All attributes shared by all classes are in this class
+    All attributes shared by all player classes are in this class -
+    This includes Warrior, Mage, and Rogue.
     """
  
     def __init__(self, name, character_class, armor, window, max_hp):
@@ -24,7 +39,97 @@ class Character:
 
         self.player_position = [window.get_width() / 2, window.get_height() / 2] #set player postion in middle
         self.speed = 0.4
-        
+
+    def getMaxLevel(self):
+        return self.__MAX_LEVEL
+    
+    def setMaxLevel(self, max):
+        self.__MAX_LEVEL = max
+
+    def getATT(self):
+        return self.__ATTRIBUTE_POINTS_PER_LEVEL
+    
+    def setATT(self, at):
+        self.__ATTRIBUTE_POINTS_PER_LEVEL = at
+
+    def getName(self):
+        return self.__name
+    
+    def setName(self, name):
+        self.__name = name
+
+    def getCharacterClass(self):
+        return self.__character_class
+    
+    def setCharacterClass(self, cclass):
+        self.__character_class = cclass
+
+    def getArmor(self):
+        return self.__armor
+    
+    def setArmor(self, armour):
+        self.__armor = armour
+
+    def getLevel(self):
+        return self.__level
+    
+    def setLevel(self, level):
+        self.__level = level
+
+    def getXP(self):
+        return self.__experience_points
+    
+    def setXP(self, xp):
+        self.__experience_points = xp
+
+    def getHitPoints(self):
+        return self.__hit_points
+    
+    def setHitPoints(self, hp):
+        self.__hit_points = hp
+
+    def getArmorClass(self):
+        return self.__armor_class
+    
+    def setArmorClass(self, armour):
+        self.__armor_class = armour
+
+    def getSkills(self):
+        return self.__skills
+    
+    def setSkills(self, skills):
+        self.__skills = skills
+
+    def getInventory(self):
+        return self.__inventory
+    
+    def setInventory(self, inv):
+        self.__inventory = inv
+
+    def getGold(self):
+        return self.__gold
+    
+    def setGold(self, gold):
+        self.__gold = gold
+
+    def getAP(self):
+        return self.__attribute_points
+    
+    def setAP(self, ap):
+        self.__attribute_points = ap
+
+    def getPlayerPosition(self):
+        return self.__player_position
+    
+    def setPlayerPosition(self, pos):
+        self.__player_position = pos
+
+    def getSpeed(self):
+        return self.__speed
+    
+    def setSpeed(self, speed):
+        self.__speed = speed
+
     def move(self, keys, in_combat): #Allows the player to move using W, A, S, D
         if in_combat == False:
             if keys[pygame.K_a]:
@@ -47,7 +152,7 @@ class Character:
                 self.player_position[1] = 590
         #This ensures the player can't exit the dimensions of the screen
 
-        elif in_combat:
+        elif in_combat: #If player is in combat restrict all movement
             if keys[pygame.K_a]:
                 self.player_position[0] -= 0
             if keys[pygame.K_d]:
@@ -101,4 +206,3 @@ class Character:
         if self.current_hp >= max_hp:
             self.current_hp = max_hp
         print(f"{self.name} heals {amount} health. Remaining hit points: {self.current_hp}")
-
