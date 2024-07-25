@@ -2,6 +2,13 @@ import pygame
 from assets import GAME_ASSETS
 
 class MainMenu:
+
+    __window = None
+    __font = None
+    __menu_options = None
+    __selected_options = 0
+    __background_image = None
+
     def __init__(self, window):
         self.window = window
         self.font = pygame.font.Font(None, 36)  # Specify the font size and style
@@ -43,3 +50,33 @@ class MainMenu:
                         return self.menu_options[self.selected_option]
 
         return 'quit'  # Default return value if the loop ends
+
+    def getWindow(self):
+        return self.__window
+    
+    def setWindow(self, wind):
+        self.__window = wind
+
+    def getFont(self):
+        return self.__font
+    
+    def setFont(self, font):
+        self.__font = font
+
+    def getMenuOptions(self):
+        return self.__menu_options
+    
+    def setMenuOptions(self, menu):
+        self.__menu_options = menu
+
+    def getSelectedOptions(self):
+        return self.__selected_options
+    
+    def setSelectedOptions(self, so):
+        self.__selected_options = so
+
+    def getBackgroundImg(self):
+        return self.__background_image
+    
+    def setBackgroundImg(self, bgi):
+        self.__background_image = bgi

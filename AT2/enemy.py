@@ -3,6 +3,13 @@ import random
 from healthBar import HealthBar
 
 class Enemy:
+
+    __image = None
+    __position = None
+    __max_health = 0
+    __health = 0
+    __level = 0
+
     def __init__(self, image_path, position, window, level):
         # Load the enemy image from the specified image path
         self.image = pygame.image.load(image_path).convert_alpha()
@@ -25,7 +32,11 @@ class Enemy:
         #Set the inital level of the enemy
         self.level = level
 
+        #Initalise the health bar class
+        self.helath_bar = HealthBar(self.window)
+
     def deal_damage(self):
+        #Random damage value that increases depending on enemy level
         damage = random.randint(5, 10) + self.level
         return damage
 
@@ -43,7 +54,7 @@ class Enemy:
             max(0, min(self.window.get_height() - self.image.get_height(), self.position[1]))
         ]
         #Draw the healthbars for enemies
-        HealthBar.drawRect(self.window, self.position[0], self.position[1] - 10, self.health, self.max_health)
+        self.helath_bar.drawRect(self.position[0], self.position[1] - 10, self.health, self.max_health)
 
         # Draw the enemy image on the window at the adjusted position
         self.window.blit(self.image, adjusted_position)
@@ -51,5 +62,35 @@ class Enemy:
     def health_cap(self):
         if self.health > 100:
             self.health = 100
+
+    def getImage(self):
+        return self.__image
+    
+    def setImage(self, img):
+        self.__image = img
+
+    def getPosition(self):
+        return self.__position
+    
+    def setPosition(self, pos):
+        self.__position = pos
+
+    def getMaxHealth(self):
+        return self.__max_health
+    
+    def setMaxHealth(self, mx):
+        self.__max_health = mx
+
+    def getHealth(self):
+        return self.__health
+    
+    def setHealth(self, health):
+        self.__health = health
+
+    def getLevel(self):
+        return self.__level
+    
+    def setLevel(self, lvl):
+        self.__level = lvl
         
     

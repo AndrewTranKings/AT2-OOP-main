@@ -1,15 +1,14 @@
 import pygame
 
 class StaminaBar():
-    def __init__(self, x, y, w, h, max_hp):
-        self.x = x
-        self.y = y
-        self.w = w
-        self.h = h
-        self.max_hp = max_hp
+    """
+    Draws a stamina bar in the coordinates that are passed in
+    """
+    def __init__(self, window):
+        self.window = window
         
-    def drawBar(window, x, y, w, max):
+    def drawBar(self, x, y, w, max): #Same code as Health Bar
         rect = pygame.rect.Rect(x, y, max, 10)
-        pygame.draw.rect(window, (255, 140, 0), rect)
+        pygame.draw.rect(self.window, (255, 140, 0), rect) #Except this rectangle is orange
         rect2 = pygame.rect.Rect(x, y, w, 10)
-        pygame.draw.rect(window, (0, 0, 255), rect2)
+        pygame.draw.rect(self.window, (0, 0, 255), rect2) #And this is blue

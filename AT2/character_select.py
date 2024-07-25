@@ -2,6 +2,12 @@ import pygame
 from assets import GAME_ASSETS
 
 class CharacterSelect:
+
+    __window = None
+    __background_image = None
+    __characters = {}
+    __back_button = None
+
     """
     A class representing the character selection screen.
 
@@ -92,3 +98,27 @@ class CharacterSelect:
                             return character
 
         return None
+    
+    def getWindow(self):
+        return self.__window
+    
+    def setWindow(self, wind):
+        self.__window = wind
+
+    def getBackgroundImage(self):
+        return self.__background_image
+    
+    def setBackgroundImage(self, bgi):
+        self.__background_image = bgi
+
+    def getCharacters(self):
+        return self.__characters
+    
+    def setCharacters(self, chr):
+        self.__characters = chr
+
+    def getBackButton(self):
+        return self.__back_button
+    
+    def setBackButton(self, bc):
+        self.__back_button = bc
