@@ -41,7 +41,7 @@ class Character:
         self.attribute_points = 0  # Attribute points available to allocate
 
         self.player_position = [window.get_width() / 2, window.get_height() / 2] #set player postion in middle
-        self.speed = 0.5
+        self.speed = 0.4
 
     def getMaxLevel(self):
         return self.__MAX_LEVEL
