@@ -16,6 +16,9 @@ class Character:
     __attribute_points = 0
     __player_position = None
     __speed = 0.0
+    __base_armor = 0
+    __base_strength = 0
+    __stamina_regen = 0
 
     """
     The blueprint for all character classes -
@@ -106,12 +109,6 @@ class Character:
     def setInventory(self, inv):
         self.__inventory = inv
 
-    def getGold(self):
-        return self.__gold
-    
-    def setGold(self, gold):
-        self.__gold = gold
-
     def getAP(self):
         return self.__attribute_points
     
@@ -129,6 +126,24 @@ class Character:
     
     def setSpeed(self, speed):
         self.__speed = speed
+
+    def getArmor(self):
+        return self.__base_armor
+    
+    def setArmor(self, armor):
+        self.__base_armor = armor
+
+    def getStrength(self):
+        return self.__base_strength
+    
+    def setStrength(self, str):
+        self.__base_strength = str
+
+    def getStamina(self):
+        return self.__stamina_regen
+    
+    def setStamina(self, stm):
+        self.__stamina_regen = stm
 
     def move(self, keys, in_combat): #Allows the player to move using W, A, S, D
         if in_combat == False:
@@ -178,8 +193,6 @@ class Character:
         while self.experience_points >= required_experience and self.level < self.__MAX_LEVEL:
             self.level += 1  # Level up the character
             self.experience_points -= required_experience  # Decrease character's experience points
-            self.current_hp = min(self.max_hp, self.current_hp + 10)  # Example: Increase hit points by 10 each level up
-            self.attribute_points += self.__ATTRIBUTE_POINTS_PER_LEVEL  # Allocate attribute points
             print(f"Level up! {self.name} is now level {self.level}.")
             # Calculate experience required for next level
             required_experience = self.calculate_required_experience(self.level + 1)
@@ -206,3 +219,8 @@ class Character:
         if self.current_hp >= max_hp:
             self.current_hp = max_hp
         print(f"{self.name} heals {amount} health. Remaining hit points: {self.current_hp}")
+
+    def update_stats(self):
+        self.__base_armor += int(self.level * 0.5)
+        self.__base_strength += int(self.level * 0.5)
+        self.__stamina_regen += int(self.level * 0.5)

@@ -3,6 +3,12 @@ import pygame
 # settings.py
 
 class Settings:
+
+    __window = None
+    __font = None
+    __options = []
+    __selected_options = 0
+
     def __init__(self, window):
         self.window = window
         self.font = pygame.font.Font(None, 36)
@@ -36,3 +42,29 @@ class Settings:
                             print(f"Adjusting {self.options[self.selected_option]}")
 
             return None
+        
+    def getWindow(self):
+        return self.__window
+    
+    def setWindow(self, windo):
+        self.__window = windo
+
+    def getFont(self):
+        return self.__font
+    
+    def setFont(self, font):
+        self.__font = font
+
+    def getOptions(self):
+        return self.__options
+    
+    def setOptions(self, options):
+        self.__options = options
+
+    def getSelectedOptions(self):
+        return self.__selected_options
+    
+    def setSelectedOptions(self, sel):
+        self.__selected_options = sel
+
+    

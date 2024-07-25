@@ -3,6 +3,10 @@ from assets import GAME_ASSETS
 
 class gameOver():
 
+    __window = None
+    __game_over_img = None
+    __font = None
+
     def __init__(self, window):
         self.window = window
         self.game_over_img = pygame.image.load(GAME_ASSETS["game_over_bg"]).convert_alpha()
@@ -21,3 +25,21 @@ class gameOver():
         textSufaceObj = fontObj.render("GAME OVER", True, TEXTCOLOUR, None)
         self.window.blit(textSufaceObj, (325, 225))
         pygame.display.flip()
+
+    def getWindow(self):
+        return self.__window
+    
+    def setWindow(self, windo):
+        self.__window = windo
+
+    def getGameOver(self):
+        return self.__game_over_img
+    
+    def setGameOver(self, gm):
+        self.__game_over_img = gm
+
+    def getFont(self):
+        return self.__font
+    
+    def setFont(self, font):
+        self.__font = font

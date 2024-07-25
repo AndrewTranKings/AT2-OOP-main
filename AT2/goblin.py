@@ -4,6 +4,10 @@ from enemy import Enemy
 
 class Goblin(Enemy):
 
+    __image = None
+    __position = None
+    __window = None
+
     def __init__(self, position, window):
         # Load the goblin image from the specified path
         self.image = pygame.image.load("AT2/assets/goblin.png").convert_alpha()  # Ensure the image path is correct
@@ -22,3 +26,22 @@ class Goblin(Enemy):
     def draw(self):
         # Draw the goblin on the game window
         self.window.blit(self.image, self.position)
+
+    def getImage(self):
+        return self.__image
+    
+    def setImage(self, img):
+        self.__image = img
+
+    def getPosition(self):
+        return self.__position
+    
+    def setPosition(self, pos):
+        self.__position = pos
+
+    def getWindow(self):
+        return self.__window
+    
+    def setWindow(self, windo):
+        self.__window = windo
+

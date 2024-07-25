@@ -3,6 +3,13 @@ import random
 from healthBar import HealthBar
 
 class Enemy:
+
+    __image = None
+    __position = None
+    __max_health = 0
+    __health = 0
+    __level = 0
+
     def __init__(self, image_path, position, window, level):
         # Load the enemy image from the specified image path
         self.image = pygame.image.load(image_path).convert_alpha()
@@ -55,5 +62,35 @@ class Enemy:
     def health_cap(self):
         if self.health > 100:
             self.health = 100
+
+    def getImage(self):
+        return self.__image
+    
+    def setImage(self, img):
+        self.__image = img
+
+    def getPosition(self):
+        return self.__position
+    
+    def setPosition(self, pos):
+        self.__position = pos
+
+    def getMaxHealth(self):
+        return self.__max_health
+    
+    def setMaxHealth(self, mx):
+        self.__max_health = mx
+
+    def getHealth(self):
+        return self.__health
+    
+    def setHealth(self, health):
+        self.__health = health
+
+    def getLevel(self):
+        return self.__level
+    
+    def setLevel(self, lvl):
+        self.__level = lvl
         
     

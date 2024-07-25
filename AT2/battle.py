@@ -2,6 +2,9 @@ import pygame
 
 class Battle():
 
+    __window = None
+    __font = None
+
     """
     The 'Battle' class handles data movement between the character and the enemy.
     It does this by retrieving the attack dictionary from the character.py file and the more specific class type
@@ -150,7 +153,7 @@ class Battle():
                 text_rect = back_text.get_rect(center=icon4.center)
                 self.window.blit(back_text, text_rect)
 
-        if current_stamina >= new_attacks[attack_name[4]]["stamina_cost"] and level >= 10: #Level 10 unlock
+        if current_stamina >= new_attacks[attack_name[4]]["stamina_cost"] and level >= 8: #Level 8 unlock
             icon5 = pygame.rect.Rect(305, 350, 200, 90) #Button 5
             pygame.draw.rect(self.window, (191, 64, 191), icon5)
             back_text = self.font.render(attack_name[4], True, (0, 0, 0))
@@ -184,3 +187,15 @@ class Battle():
         character_type.sustain_stamina() #Makes sure the player can always 'basic attack'
         #Final output result with player's delt damage
         return player_damage
+    
+    def getWindow(self):
+        return self.__window
+    
+    def setWindow(self, wind):
+        self.__window = wind
+
+    def getFont(self):
+        return self.__font
+    
+    def setFont(self, font):
+        self.__font = font

@@ -62,6 +62,7 @@ class Map:
         self.wave_counter = 1 #Start on wave one
         self.open_skills_menu = False #Switch to open skills menu
         self.battle_machine = Battle(self.window) #Instance of the battle class
+        
         self.health_bar = HealthBar(self.window) #Instance of the health bar class
         self.stamina_bar = StaminaBar(self.window) #Instance of the stamina bar class
 
@@ -143,7 +144,7 @@ class Map:
         if character_type == "Warrior":                             #Key: 3 = Good, 2 = Mid, 1 = Bad
             self.player = Warrior("Player", 120, 4, self.window) #Warrior has defense: 3, offense: 1, stamina: 2
         elif character_type == "Rogue":
-            self.player = Rogue("Player", 80, 1, self.window) #Rogue has defense: 1, offense: 2, stamina: 3
+            self.player = Rogue("Player", 80, 2, self.window) #Rogue has defense: 1, offense: 2, stamina: 3
         elif character_type == "Mage":
             self.player = Mage("Player", 100, 2, self.window) #Mage has defense: 2, offense, 3, stamina: 1
 
@@ -172,6 +173,7 @@ class Map:
         if self.in_combat and self.current_enemy:
             enemy_defeated = False
             enemy_health = self.current_enemy.health
+            #Handle battle mechanics
             player_damage = self.battle_machine.attacks(self.player, self.player.current_stamina, self.player.level)
             int(player_damage) #Make sure damage returns as 'int' and not 'None'
             if int(player_damage):
@@ -194,6 +196,8 @@ class Map:
                 self.player.gain_health(random.randint(self.player.level + 8, self.player.level + 15), self.player.max_hp) #Get health from enemy defeat
                 self.player.armor = self.player.base_armor #Reset armor from any armor buffs
                 self.player.strength = self.player.base_strength #Reset from any strength buffs
+                
+                #--Levelling and Progression--
                 if self.player.gain_experience(50) == "Yes": #Give player 50 experience for enemy defeat
                     self.player.update_stats() #If level up then update the player's states
                 if not self.enemies:
@@ -315,9 +319,11 @@ class Map:
             self.window.blit(self.map_image, (0, 0))
         
         self.window.blit(self.player_image, (self.player.player_position[0], self.player.player_position[1]))
-        #Draw healthbar for player's character
-        self.health_bar.drawRect(self.player.player_position[0], self.player.player_position[1] - 22, self.player.current_hp, self.player.max_hp)
-        self.stamina_bar.drawBar(self.player.player_position[0], self.player.player_position[1] - 10, self.player.current_stamina, self.player.max_stamina)
+        
+        #Draw healthbar and stamina bar for player's character
+        self.health_bar.drawRect(self.player.player_position[0], self.player.player_position[1] - 22, self.player.current_hp, self.player.max_hp) #22 pixels above the player
+        self.stamina_bar.drawBar(self.player.player_position[0], self.player.player_position[1] - 10, self.player.current_stamina, self.player.max_stamina) #10 pixels above
+        
         self.track_wave_count() #Draw wave counter
         self.track_player_level() #Draw player level counter
         self.handle_combat() #Draw battle buttons

@@ -2,6 +2,17 @@ from character import Character
 import random
 
 class Warrior(Character):
+
+    __max_stamina = 0
+    __current_stamina = 0
+    __stamina_regeneration = 0
+    __base_armor = 0
+    __armor = 0
+    __base_strength = 0
+    __strength = 0
+    __attacks = {}
+    __skills = {}
+
     """
     Warrior has the best defense but worst strength
     """
@@ -77,3 +88,57 @@ class Warrior(Character):
     def skill_2(self): #Max Potion
         self.gain_health(self.max_hp, self.max_hp)
         print(f"{self.name} regenerates to full health!")
+
+    def getMaxStamina(self):
+        return self.__max_stamina
+    
+    def setMaxStamina(self, max):
+        self.__max_stamina = max
+
+    def getCurrentStamina(self):
+        return self.__current_stamina
+    
+    def setCurrentStamina(self, stm):
+        self.__current_stamina = stm
+
+    def getStaminaRegen(self):
+        return self.__stamina_regeneration
+    
+    def setStaminaRegen(self, stm):
+        self.__stamina_regeneration = stm
+
+    def getBaseArmor(self):
+        return self.__base_armor
+    
+    def setBaseArmor(self, arm):
+        self.__base_armor = arm
+
+    def getArmor(self):
+        return self.__armor
+    
+    def setArmor(self, arm):
+        self.__armor = arm
+
+    def getBaseStrength(self):
+        return self.__base_strength
+    
+    def setBaseStrength(self, str):
+        self.__base_strength = str
+
+    def getStrength(self):
+        return self.__strength
+    
+    def setStrength(self, str):
+        self.__strength = str
+
+    def getAttacks(self):
+        return self.__attacks
+    
+    def setAttacks(self, attacks):
+        self.__attacks = attacks
+
+    def getSkills(self):
+        return self.__skills
+    
+    def setSkills(self, skills):
+        self.__skills = skills

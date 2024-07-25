@@ -8,6 +8,15 @@ from settings import Settings
 from assets import load_assets, GAME_ASSETS
 
 class Game:
+    __window = None
+    __menu = None
+    __character_select = None
+    __settings = None
+    __game_map = None
+    __skills_menu = None
+    __gomenu = None
+    __character = None
+    __state = None
     """
     Acts as the 'main' file for King's Quest
     All 'run' methods are ran here and this class is used to change the state of the game
@@ -81,6 +90,61 @@ class Game:
                     pygame.quit()  # Quit pygame
                     return  # Exit the run method
 
+    def getWindow(self):
+        return self.__window
+    
+    def setWindow(self, wind):
+        self.__window = wind
+
+    def getMenu(self):
+        return self.__menu
+    
+    def setMenu(self, menu):
+        self.__menu = menu
+
+    def getCharacterSelect(self):
+        return self.__character_select
+
+    def setCharacterSelect(self, chr):
+        self.__character_select = chr  
+
+    def getSettings(self):
+        return self.__settings
+
+    def setSettings(self, set):
+        self.__settings = set
+
+    def getGameMap(self):
+        return self.__game_map
+
+    def setGameMap(self, gm):
+        self.__game_map =  gm
+
+    def getSkillsMenu(self):
+        return self.__skills_menu
+
+    def setSkillsMenu(self, skill):
+        self.__skills_menu = skill
+
+    def getGOMenu(self):
+        return self.__gomenu
+
+    def setGOMenu(self, go):
+        self.__gomenu = go 
+
+    def getCharacter(self):
+        return self.__character
+    
+    def setCharacter(self, chr):
+        self.__character = chr
+
+    def getState(self):
+        return self.__state
+    
+    def setState(self, st):
+        self.__state = st
+
 if __name__ == "__main__":
     game = Game()  # Create an instance of the Game class
     game.run()  # Run the game
+

@@ -2,6 +2,15 @@ import pygame
 from assets import GAME_ASSETS
 
 class ClassSkills():
+    __window = None
+    __scroll_image = None #Background img
+    __scroll_position = None
+    __go_back = False #Acts as a switch
+    __font = None 
+    __character = None #Holds player's class type
+    __skill_names = [] #List of skill names for each class
+    __active_skill_1 = False
+    __active_skill_2 = False
     """
     Controls everything inside the Class Skills menu
     Is initialised by 'game.py' to switch states
@@ -20,6 +29,60 @@ class ClassSkills():
         self.skill_names = [] #List that holds the names of skills
         self.active_skill_1 = True #Each class has 2 skills they can use
         self.active_skill_2 = True
+
+    def getWindow(self):
+        return self.__window
+    
+    def setWindow(self, window):
+        self.__window = window
+
+    def getScroll(self):
+        return self.__scroll_image
+    
+    def setScroll(self, sc):
+        self.__scroll_image = sc
+
+    def getScrollPos(self):
+        return self.__scroll_position
+    
+    def setScrollPos(self, pos):
+        self.__scroll_position = pos
+
+    def getGoBack(self):
+        return self.__go_back
+    
+    def setGoBack(self, back):
+        self.__go_back = back
+
+    def getFont(self):
+        return self.__font
+    
+    def setFont(self, font):
+        self.__font = font
+
+    def getCharacter(self):
+        return self.__character
+    
+    def setCharacter(self, chr):
+        self.__character = chr
+
+    def getSkillNames(self):
+        return self.__skill_names
+    
+    def setSkillNames(self, skilln):
+        self.__skill_names = skilln
+
+    def getActiveSkill1(self):
+        return self.__active_skill_1
+    
+    def setActiveSkill1(self, skill1):
+        self.__active_skill_1 = skill1
+
+    def getActiveSkill2(self):
+        return self.__active_skill_2
+    
+    def setActiveSkill2(self, skill2):
+        self.__active_skill_2 = skill2
 
     def drawButton(self):
         """
@@ -139,7 +202,6 @@ class ClassSkills():
                     pygame.quit()
                     return None
                 
-    
     def draw(self):
         self.window.blit(self.scroll_image, (0, 0))
         self.drawButton()
